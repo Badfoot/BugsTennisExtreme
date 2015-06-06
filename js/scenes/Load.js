@@ -22,6 +22,42 @@ var loadState = {
         game.load.image('vulnerable', 'assets/images/icon_skills/vulnerable.jpg');
         game.load.image('wall', 'assets/images/icon_skills/wall.jpg');
         
+        //background
+        game.load.image('about', 'assets/images/backgrounds/about.jpg');
+        game.load.image('baseBackground', 'assets/images/backgrounds/baseBackground.jpg');
+        game.load.image('field', 'assets/images/backgrounds/field.jpg');
+        game.load.image('instructionsBoons', 'assets/images/backgrounds/instructions_boons.jpg');
+        game.load.image('instructionsDebufs', 'assets/images/backgrounds/instructions_debufs.jpg');
+        game.load.image('instructionsMov', 'assets/images/backgrounds/instructions_mov.jpg');
+        game.load.image('main', 'assets/images/backgrounds/main.jpg');
+        
+        //Buttons
+         game.load.image('aboutButton', 'assets/images/buttons/about.png');
+         game.load.image('aboutHover', 'assets/images/buttons/about_hover.png');
+         game.load.image('arrowLeft', 'assets/images/buttons/arrow_left.png');
+         game.load.image('arrowRight', 'assets/images/buttons/arrow_right.png');
+         game.load.image('instructions', 'assets/images/buttons/instructions.png');
+         game.load.image('instructionsHover', 'assets/images/buttons/instructions_hover.png');
+         game.load.image('menu', 'assets/images/buttons/menu.png');
+         game.load.image('play', 'assets/images/buttons/play.png');
+         game.load.image('playHover', 'assets/images/buttons/play_hover.png');
+         game.load.image('sound', 'assets/images/buttons/sound.png');
+        
+        //Paddles
+         game.load.image('left', 'assets/images/paddles/left.png');
+         game.load.image('right', 'assets/images/paddles/right.png');
+        
+        //LogoBugtennis
+        game.load.image('bugtennis', 'assets/images/logo/bugtennis/bugtennis.png');
+        //logofuremol
+        game.load.image('bugtennis', 'assets/images/logo/furemol/furemolLogo.png');
+        
+        
+        
+        
+        
+        
+        
         
         
 	},
