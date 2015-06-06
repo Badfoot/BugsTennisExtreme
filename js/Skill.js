@@ -25,9 +25,10 @@ var Skill = function () {
     this.liveAmount=0;
     this.howOften=0.00;
     this.duration=0.00;
-    //this.sprite=;
+    this.sprite;
     
-}
+};
+
 
 //boon
 Skill.prototype.getBoon = function(){
@@ -95,4 +96,14 @@ Skill.prototype.getDuration = function(){
 
 Skill.prototype.setDuration = function(value){
     this.duration = value;
+}
+
+//sprite
+
+Skill.prototype.getSprite = function(){
+    return this.sprite;
+}
+
+Skill.prototype.setSprite = function(value){
+    this.sprite = value;
 }
