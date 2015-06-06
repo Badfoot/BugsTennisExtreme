@@ -1,5 +1,3 @@
-var Skill = function () {
-    
     const SKILL_BOON = true;
     const SKILL_DEBUF = false;
     const SKILL_WALL= 1;
@@ -17,7 +15,8 @@ var Skill = function () {
     const SKILL_VULNERABILITY = 13;
     const SKILL_TURN_OFF_SKILL = 14;
 
-
+var Skill = function () {
+    
 
     this.boon=false;
     this.typeOf=0;
