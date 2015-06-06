@@ -1,29 +1,29 @@
 var loadState = {
 
 	preload: function () {
-		var loadingLabel = game.add.text(game.world.centerX, 150, 'loading...', { font: '30px Arial', fill: '#ffffff' });
-		loadingLabel.anchor.setTo(0.5, 0.5);
-
-		var progressBar = game.add.sprite(game.world.centerX, 200, 'progressBar');
-		progressBar.anchor.setTo(0.5, 0.5);
-		game.load.setPreloadSprite(progressBar);
-
-		game.load.spritesheet('player', 'assets/player2.png', 20, 20);
-		game.load.image('enemy', 'assets/enemy.png');
-		game.load.image('coin', 'assets/coin.png');
-		game.load.image('pixel', 'assets/pixel.png');
-		game.load.image('background', 'assets/background.png');
-		game.load.spritesheet('mute', 'assets/muteButton.png', 28, 22);
-		game.load.image('jumpButton', 'assets/jumpButton.png');
-		game.load.image('rightButton', 'assets/rightButton.png');
-		game.load.image('leftButton', 'assets/leftButton.png');
-
-		game.load.audio('jump', ['assets/jump.ogg', 'assets/jump.mp3']);
-		game.load.audio('coin', ['assets/coin.ogg', 'assets/coin.mp3']);
-		game.load.audio('dead', ['assets/dead.ogg', 'assets/dead.mp3']);
-
-		this.load.image('tileset', 'assets/tileset.png'); 
-        this.load.tilemap('map', 'assets/map.json', null, Phaser.Tilemap.TILED_JSON);
+        //ball
+		game.load.image('ball', 'assets/images/ball/ball.png');
+        //icon_skillCollector
+        game.load.image('badCollector', 'assets/images/icon_skillCollector/badCollector.png');
+        game.load.image('goodCollector', 'assets/images/icon_skillCollector/goodApple.png');
+        //icon_skills
+	    game.load.image('changeDirection', 'assets/images/icon_skills/change_direction.jpg');
+        game.load.image('healState', 'assets/images/icon_skills/heal_state.jpg');
+        game.load.image('invisible', 'assets/images/icon_skills/invisible.jpg');
+        game.load.image('misil', 'assets/images/icon_skills/misil.jpg');
+        game.load.image('paddleDwarf', 'assets/images/icon_skills/paddle_dwarf.jpg');
+        game.load.image('paddleGrow', 'assets/images/icon_skills/paddle_grow.jpg');
+        game.load.image('poison', 'assets/images/icon_skills/poison.jpg');
+        game.load.image('potion', 'assets/images/icon_skills/potion.jpg');
+        game.load.image('shield', 'assets/images/icon_skills/shield.jpg');
+        game.load.image('turnOffSkillCollector', 'assets/images/icon_skills/turn_off_skill_collector.jpg');
+        game.load.image('velDwarf', 'assets/images/icon_skills/vel_dwarf.jpg');
+        game.load.image('velGrow', 'assets/images/icon_skills/vel_grow.jpg');
+        game.load.image('vulnerable', 'assets/images/icon_skills/vulnerable.jpg');
+        game.load.image('wall', 'assets/images/icon_skills/wall.jpg');
+        
+        
+        
 	},
 
 	create: function() { 
