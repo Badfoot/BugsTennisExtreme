@@ -5,6 +5,7 @@ var Paddle = function () {
     this.isVulnerable=false;
     this.poisoned=false;
     this.isInvisible=false;
+    this.sprite;
     this.wall;
 
 };
@@ -67,4 +68,14 @@ Skill.prototype.getWall = function(){
 
 Skill.prototype.setWall = function(value){
     this.wall = value;
+}
+
+//sprite
+
+Skill.prototype.getSprite = function(){
+    return this.sprite;
+}
+
+Skill.prototype.setSprite = function(value){
+    this.sprite = value;
 }
