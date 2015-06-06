@@ -1,13 +1,23 @@
 var SkillCollector = function () {
 
     this.active = false;
+    this.sprite;
 };
 
-//boon
-Skill.prototype.getActive = function(){
+//active
+SkillCollector.prototype.getActive = function(){
     return this.active;
 }
 
-Skill.prototype.setActive = function(value){
+SkillCollector.prototype.setActive = function(value){
     this.active = value;
+}
+
+//sprite
+SkillCollector.prototype.getSprite = function(){
+    return this.sprite;
+}
+
+SkillCollector.prototype.setSprite = function(value){
+    this.sprite = value;
 }

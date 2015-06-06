@@ -12,70 +12,70 @@ var Paddle = function () {
 
 //speed
 
-Skill.prototype.getSpeed = function(){
+Paddle.prototype.getSpeed = function(){
     return this.speed;
 }
 
-Skill.prototype.setSpeed = function(value){
+Paddle.prototype.setSpeed = function(value){
     this.speed = value;
 }
 
 //haveShield
 
-Skill.prototype.getHaveShield = function(){
+Paddle.prototype.getHaveShield = function(){
     return this.haveShield;
 }
 
-Skill.prototype.setHaveShield = function(value){
+Paddle.prototype.setHaveShield = function(value){
     this.haveShield = value;
 }
 
 //isVulnerable
 
-Skill.prototype.getIsVulnerable = function(){
+Paddle.prototype.getIsVulnerable = function(){
     return this.isVulnerable;
 }
 
-Skill.prototype.setIsVulnerable = function(value){
+Paddle.prototype.setIsVulnerable = function(value){
     this.isVulnerable = value;
 }
 
 //poisoned
 
-Skill.prototype.getPoisoned = function(){
+Paddle.prototype.getPoisoned = function(){
     return this.poisoned;
 }
 
-Skill.prototype.setPoisoned = function(value){
+Paddle.prototype.setPoisoned = function(value){
     this.poisoned = value;
 }
 
 //isInvisible
 
-Skill.prototype.getIsInvisible = function(){
+Paddle.prototype.getIsInvisible = function(){
     return this.isInvisible;
 }
 
-Skill.prototype.setIsInvisible = function(value){
+Paddle.prototype.setIsInvisible = function(value){
     this.isInvisible = value;
 }
 
 //wall
 
-Skill.prototype.getWall = function(){
+Paddle.prototype.getWall = function(){
     return this.wall;
 }
 
-Skill.prototype.setWall = function(value){
+Paddle.prototype.setWall = function(value){
     this.wall = value;
 }
 
 //sprite
 
-Skill.prototype.getSprite = function(){
+Paddle.prototype.getSprite = function(){
     return this.sprite;
 }
 
-Skill.prototype.setSprite = function(value){
+Paddle.prototype.setSprite = function(value){
     this.sprite = value;
 }

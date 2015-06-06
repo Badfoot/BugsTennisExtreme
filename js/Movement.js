@@ -1,7 +1,11 @@
-function movePaddle(sprite){
+var Movement = function () {
+    
+};
+
+Movement.prototype.movePaddle = function(sprite){
    //
 }
 
-function moveBall(sprite) {
+Movement.prototype.moveBall = function(sprite) {
    //
 }
