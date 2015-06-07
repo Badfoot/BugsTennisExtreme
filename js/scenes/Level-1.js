@@ -1,3 +1,6 @@
+//BORRAR
+
+
 var level1State = {
 /**/preload: function () {
        // game.load.audio("ost1", "assets/ost/4 - Fight!.ogg");

@@ -1,4 +1,7 @@
-var playState = {
+//BORRAR
+
+
+/*var gameState = {
 
 	create: function() { 
 		//
@@ -17,4 +20,4 @@ var playState = {
 	},
 
 	//
-};
+};*/

@@ -1,0 +1,53 @@
+﻿/********************************************************************/
+/*	//	//		//	//		FILOSMUSIC		//	//		//	//		*/
+/********************************************************************/
+/*	Conjunto de estilos y tamanhos dinamicos de fuentes de texto.	*/
+/*																	*/
+/*	------------------------------------------------------------	*/
+/*																	*/
+/*	Set of styles and responsive sizes of text fonts.				*/
+/*																	*/
+/********************************************************************/
+/*	//	//		//	//		//	//	//		//	//		//	//		*/
+/*PROPIEDAD DE SAMUEL CARNERO JOSE						//	//		*/
+/*filosmusic@hotmail.com | filosmusic@gmail.com			//	//		*/
+/*	//	//		//	//		//	//	//		//	//		//	//		*/
+/********************************************************************/
+/*Update: 07/06/2015*/
+
+/*FONTS*/
+/*must import as: <link href='http://fonts.googleapis.com/css?family=Geo' rel='stylesheet' type='text/css'> on htmlHead*/
+.filos-fontFamily-geo{
+	font-family: Geo;
+}
+
+/*must import as: <link href='#path#/DCC - Cloud.otf' rel='stylesheet' type='text/css'> on htmlHead*/
+.filos-fontFamily-dcc-cloud{
+	font-family: DCC - CLOUD;
+}
+
+/*must import as: <link href='#path#/BLACK RAIN.ttf' rel='stylesheet' type='text/css'> on htmlHead*/
+.filos-fontFamily-black-rain{
+	font-family: BLACK RAIN;
+}
+
+/*STYLES*/
+.filos-fontWeight-bold{
+	font-weight: bold;
+}
+.filos-fontWeight-normal{
+	font-weight: normal;
+}
+/*SIZES*/
+.filos-fontSize-Large{
+	font-size: 1vw;
+}
+.filos-fontSize-XtraLarge{
+	font-size: 1.4vw;
+}
+.filos-fontSize-Normal{
+	font-size: 0.7vw;
+}
+.filos-fontSize-Small{
+	font-size: 0.5vw;
+}

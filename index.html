@@ -6,7 +6,7 @@
 		<title> Bugs Tennis Extreme </title>
 
 		<style type="text/css">
-			@import url(http://fonts.googleapis.com/css?family=Geo);
+			@import url(assets/fonts/DCC - Cloud.otf);
 
 			* {
 				margin: 0;
@@ -23,35 +23,43 @@
 		<meta name="mobile-web-app-capable" content="yes" />
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="HandheldFriendly" content="true" />
-
-		<script type="text/javascript" src="phaser.js"></script>
-    
-		<script type="text/javascript" src="js/Paddle.js.js"></script>
+        
+        <!-- ENGINE -->
+		<script type="text/javascript" src="engine/phaser.js"></script>
+        
+        <!-- OBJECTS -->
+		<script type="text/javascript" src="js/Paddle.js"></script>
+        <script type="text/javascript" src="js/SkillCollector.js"></script>
 		<script type="text/javascript" src="js/FuRemol.js"></script>
 		<script type="text/javascript" src="js/Movement.js"></script>
-		<script type="text/javascript" src="js/SkillCollector.js"></script>
-		<script type="text/javascript" src="js/Skill.js"></script>
+        <script type="text/javascript" src="js/Skill.js"></script>
         <script type="text/javascript" src="js/Wall.js"></script>
         <script type="text/javascript" src="js/Ball.js"></script>
         <script type="text/javascript" src="js/Missile.js"></script>
         <script type="text/javascript" src="js/GlowEffect.js"></script>
         <script type="text/javascript" src="js/Player.js"></script>
+		
+		<!-- MECHANICS -->
         <script type="text/javascript" src="js/GameMechanics.js"></script>
-        <script type="text/javascript" src="js/HPBars.js"></script>
         
+        <!-- LOADS -->
         <script type="text/javascript" src="js/scenes/Boot.js"></script>
         <script type="text/javascript" src="js/scenes/Load.js"></script>
         
-        <script type="text/javascript" src="js/scenes/AllLevelMaps.js"></script>        
-        <script type="text/javascript" src="js/scenes/Menu.js"></script>
-       
+        <!-- STATES -->  
         <script type="text/javascript" src="js/main/Game.js"></script>
+        <script type="text/javascript" src="js/scenes/About.js"></script>
+        <script type="text/javascript" src="js/scenes/Instructions.js"></script>
+        <script type="text/javascript" src="js/scenes/Menu.js"></script>
+        
+        <!-- MAIN -->
+        <script type="text/javascript" src="js/main/BugTennisExtreme.js"></script>
         
 	</head>
 
 	<body>
-		<div id="gameDiv"> </div>
-		<p class="hiddenText"> . </p>
+        <p class="filos-fontFamily-dcc-cloud filos-utilHidden">.</p>
+		<div id="gameDiv"></div>
 	</body>
 
 </html>

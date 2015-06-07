@@ -1,0 +1,139 @@
+﻿/********************************************************************/
+/*	//	//		//	//		FILOSMUSIC		//	//		//	//		*/
+/********************************************************************/
+/*	Conjunto de colores de fuente y fondo.							*/
+/*																	*/
+/*	------------------------------------------------------------	*/
+/*																	*/
+/*	Set of font colors and background colors						*/
+/*																	*/
+/********************************************************************/
+/*	//	//		//	//		//	//	//		//	//		//	//		*/
+/*PROPIEDAD DE SAMUEL CARNERO JOSE						//	//		*/
+/*filosmusic@hotmail.com | filosmusic@gmail.com			//	//		*/
+/*	//	//		//	//		//	//	//		//	//		//	//		*/
+/********************************************************************/
+/*Update: 12/08/2014*/
+
+/*FONT COLORS*/
+.filos-black{
+	color: #212527 !important;
+}
+.filos-blue{
+	color: #003fff !important;
+}
+.filos-blueLight{
+	color: #299FE0 !important;
+}
+.filos-blueMate{
+	color: #007A8A !important;
+}
+.filos-green{
+	color: #43e56b !important;
+}
+.filos-greenMate{
+	color: #00AB8B !important;
+}
+.filos-grey{
+	color: #58585A !important;
+}
+.filos-greySoftDark{
+	color: #3C403F !important;
+}
+.filos-greyDark{
+	color: #313437 !important;
+}
+.filos-greyLight{
+	color: #939599 !important;
+}
+.filos-orange{
+	color: #ff5500 !important;
+}
+.filos-pink{
+	color: #E50095 !important;
+}
+.filos-red{
+	color: #cc5256 !important;
+}
+.filos-redMate{
+	color: #EF4B3F !important;
+}
+.filos-transparent{
+	color: transparent !important;
+}
+.filos-violet{
+	color: #C100B7 !important;
+}
+.filos-white{
+	color: #fff !important;
+}
+.filos-yellow{
+	color: #d1c33d !important;
+}
+.filos-yellowDark{
+	color: #F6A632 !important;
+}
+.filos-yellowLight{
+	color: #EFE268 !important;
+}
+/*BACKGROUND COLORS*/
+.filos-bg-black{
+	background-color: #212527 !important;
+}
+.filos-bg-blue{
+	background-color: #003fff !important;
+}
+.filos-bg-blueLight{
+	background-color: #299FE0 !important;
+}
+.filos-bg-blueMate{
+	background-color: #007A8A !important;
+}
+.filos-bg-green{
+	background-color: #43e56b !important;
+}
+.filos-bg-greenMate{
+	background-color: #00AB8B !important;
+}
+.filos-bg-grey{
+	background-color: #58585A !important;
+}
+.filos-bg-greySoftDark{
+	background-color: #3C403F !important;
+}
+.filos-bg-greyDark{
+	background-color: #313437 !important;
+}
+.filos-bg-greyLight{
+	background-color: #939599 !important;
+}
+.filos-bg-orange{
+	background-color: #ff5500 !important;
+}
+.filos-bg-pink{
+	background-color: #E50095 !important;
+}
+.filos-bg-red{
+	background-color: #cc5256 !important;
+}
+.filos-bg-redMate{
+	background-color: #EF4B3F !important;
+}
+.filos-bg-transparent{
+	background-color: transparent !important;
+}
+.filos-bg-violet{
+	background-color: #C100B7 !important;
+}
+.filos-bg-white{
+	background-color: #fff !important;
+}
+.filos-bg-yellow{
+	background-color: #d1c33d !important;
+}
+.filos-bg-yellowDark{
+	background-color: #F6A632 !important;
+}
+.filos-bg-yellowLight{
+	background-color: #EFE268 !important;
+}

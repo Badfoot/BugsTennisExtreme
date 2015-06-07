@@ -1,9 +1,12 @@
 //Clase Util
-const FUREMOL_LOAD= 0;
-const FUREMOL_MENU= 1;
-const FUREMOL_GAME= 4;
-const FUREMOL_ABOUT= 2;
-const FUREMOL_INSTRUCTIONS= 3;
+const FUREMOL_LOAD = "state-load";
+const FUREMOL_BOOT = "state-boot";
+const FUREMOL_MENU = "state-menu";
+const FUREMOL_GAME = "state-play";
+const FUREMOL_ABOUT = "state-about";
+const FUREMOL_INSTRUCTIONS_1 = "state-instructions-1";
+const FUREMOL_INSTRUCTIONS_2 = "state-instructions-2";
+const FUREMOL_INSTRUCTIONS_3 = "state-instructions-3";
 
 /********************************************/
 //AUDIO
@@ -22,21 +25,18 @@ function playAudio(audioName, loop) {
     audio.play();
 }
 
-function mute(button){
+function toggleSound(button){
     game.sound.mute = !(game.sound.mute);
     button.frame = game.sound.mute ? 1 : 0;
 }
 
 
 function stopAllSounds(){
-    //
+    //if(game.sound.mute) game.sound.stopAll();
 }
 
-function unMute(){
-    //
-}
-
-function goToLvl(){
-    //
+function goToLvl(state){
+    stopAllSounds();
+    game.state.start(state);
 }
 
