@@ -26,7 +26,6 @@ var loadState = {
         
         //background
         game.load.image('bg_about', 'assets/images/backgrounds/about.jpg');
-        game.load.image('bg_field', 'assets/images/backgrounds/field.jpg');
         game.load.image('bg_instructionsBoons', 'assets/images/backgrounds/instructions_boons.jpg');
         game.load.image('bg_instructionsDebufs', 'assets/images/backgrounds/instructions_debufs.jpg');
         game.load.image('bg_instructionsMov', 'assets/images/backgrounds/instructions_mov.jpg');
@@ -53,9 +52,19 @@ var loadState = {
         //logofuremol
         game.load.image('logo_furemolLogo', 'assets/images/logo/furemol/furemolLogo.png');
         
+        //imageMaps
         
-        
-        
+        game.load.image('imgMaps_field', 'assets/images/imagemaps/field.jpg');
+        game.load.image('imgMaps_infLeft', 'assets/images/imagemaps/inf_left.jpg');
+        game.load.image('imgMaps_infMid', 'assets/images/imagemaps/inf_mid.jpg'); 
+        game.load.image('imgMaps_infRight', 'assets/images/imagemaps/inf_right.jpg');
+        game.load.image('imgMaps_leftInf', 'assets/images/imagemaps/left_inf.jpg');
+        game.load.image('imgMaps_leftSup', 'assets/images/imagemaps/left_sup.jpg');
+        game.load.image('imgMaps_rightInf', 'assets/images/imagemaps/right_inf.jpg');
+        game.load.image('imgMaps_rightSup', 'assets/images/imagemaps/right_sup.jpg'); 
+        game.load.image('imgMaps_supLeft', 'assets/images/imagemaps/sup_left.jpg');
+        game.load.image('imgMaps_supMid', 'assets/images/imagemaps/sup_mid.jpg');
+        game.load.image('imgMaps_supRight', 'assets/images/imagemaps/sup_right.jpg');
         
         
         

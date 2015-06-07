@@ -17,7 +17,6 @@ var level1State = {
         this.bestScored = false;
         //WORLD
         //this.createWorld();
-        //this.createCoins();
         //PLAYER
         //this.setUserControl();//control
         //this.createPlayer();//sprite
