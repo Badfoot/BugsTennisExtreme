@@ -40,3 +40,25 @@ function goToLvl(state){
     game.state.start(state);
 }
 
+/********************************************/
+//USER CONTROLS
+/********************************************/
+function setArrowKeys(){
+    return game.input.keyboard.createCursorKeys();
+}
+
+function setKey(key){
+    return game.input.keyboard.addKey(key);
+}
+
+function setMouse(key){
+    /*NOT IMPLEMENTED*/
+}
+
+function keyCapture(key){
+    if(!key.up) game.input.keyboard.addKeyCapture([key]);
+    else{
+        game.input.keyboard.addKeyCapture([key.up, key.left, key.right]);
+    }
+}
+

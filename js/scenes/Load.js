@@ -31,6 +31,8 @@ var loadState = {
         game.load.image('bg_instructions3', '../assets/images/backgrounds/instructions_debufs.jpg');
         game.load.image('bg_instructions1', '../assets/images/backgrounds/instructions_mov.jpg');
         game.load.image('bg_main', '../assets/images/backgrounds/main.jpg');
+        game.load.image('bg_base', '../assets/images/backgrounds/baseBackground.jpg');
+        
         
         //Buttons
         game.load.image('btn_about', '../assets/images/buttons/about.png');

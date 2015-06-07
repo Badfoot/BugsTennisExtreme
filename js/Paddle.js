@@ -1,13 +1,14 @@
 var Paddle = function () {
 
-    this.speed=0;
+    this.speed=GAMEMECHANICS_FIELD_HEIGHT/100;
     this.haveShield=true;
     this.isVulnerable=false;
     this.poisoned=false;
     this.isInvisible=false;
+    this.spriteImage = "";
     this.sprite;
     this.wall;
-
+    this.signY = 0;
 };
 
 //speed
@@ -70,12 +71,59 @@ Paddle.prototype.setWall = function(value){
     this.wall = value;
 }
 
+//spriteimage
+
+Paddle.prototype.getSpriteImage = function(){
+    return this.spriteImage;
+}
+
+Paddle.prototype.setSpriteImage = function(value){
+    this.spriteImage = value;
+}
+
 //sprite
 
 Paddle.prototype.getSprite = function(){
     return this.sprite;
 }
 
-Paddle.prototype.setSprite = function(value){
-    this.sprite = value;
+Paddle.prototype.setSprite = function(x){
+    this.sprite = game.add.sprite(
+        x,                              //x position
+        GAMEMECHANICS_WORLD_HEIGHT/2,   //y position
+        this.getSpriteImage()           //image
+    );
+}
+
+//SIGN Y
+Paddle.prototype.getSignY = function(){
+    return this.signY;
+}
+
+
+//METHODS
+Paddle.prototype.createPaddle = function(x){
+    this.setSprite(x);
+    this.sprite.anchor.setTo(0.5, 0.5);
+}
+
+Paddle.prototype.move = function(cursor){
+    //move
+    if(cursor.up.isDown){
+        if(this.getSprite().y - this.getSpeed() < 50+GAMEMECHANICS_MARGIN_PADDLE_TO_TOP+30) {
+            this.getSprite().y = 50+GAMEMECHANICS_MARGIN_PADDLE_TO_TOP+30;
+        } else if (this.getSprite().y > 50+GAMEMECHANICS_MARGIN_PADDLE_TO_TOP+30){
+            this.getSprite().y -= this.getSpeed();
+        }
+        this.signY = -1;
+    }else if(cursor.down.isDown){
+        if(this.getSprite().y + this.getSpeed() > GAMEMECHANICS_WORLD_HEIGHT-50-GAMEMECHANICS_MARGIN_PADDLE_TO_BOTTOM-30) {
+            this.getSprite().y = GAMEMECHANICS_WORLD_HEIGHT-50-GAMEMECHANICS_MARGIN_PADDLE_TO_BOTTOM-30;
+        } else if (this.getSprite().y < GAMEMECHANICS_WORLD_HEIGHT-50-GAMEMECHANICS_MARGIN_PADDLE_TO_BOTTOM-30){
+            this.getSprite().y += this.getSpeed();
+        }
+        this.signY = 1;
+    } else {
+        this.signY = 0;
+    }
 }

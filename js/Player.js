@@ -1,8 +1,7 @@
 const PLAYER_HP = 100;
 
 var Player = function () {
-
-    this.hp = 0;
+    this.hp = PLAYER_HP;
     this.skillsBoon;
 };
 
