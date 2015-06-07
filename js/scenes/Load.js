@@ -32,20 +32,20 @@ var loadState = {
         game.load.image('bg_main', 'assets/images/backgrounds/main.jpg');
         
         //Buttons
-         game.load.image('btn_about', 'assets/images/buttons/about.png');
-         game.load.image('btn_aboutHover', 'assets/images/buttons/about_hover.png');
-         game.load.image('btn_arrowLeft', 'assets/images/buttons/arrow_left.png');
-         game.load.image('btn_arrowRight', 'assets/images/buttons/arrow_right.png');
-         game.load.image('btn_instructions', 'assets/images/buttons/instructions.png');
-         game.load.image('btn_instructionsHover', 'assets/images/buttons/instructions_hover.png');
-         game.load.image('btn_menu', 'assets/images/buttons/menu.png');
-         game.load.image('btn_play', 'assets/images/buttons/play.png');
-         game.load.image('btn_playHover', 'assets/images/buttons/play_hover.png');
-         game.load.spritesheet('btn_sound', 'assets/images/buttons/sound.png', 35, 30);
+        game.load.image('btn_about', 'assets/images/buttons/about.png');
+        game.load.image('btn_aboutHover', 'assets/images/buttons/about_hover.png');
+        game.load.image('btn_arrowLeft', 'assets/images/buttons/arrow_left.png');
+        game.load.image('btn_arrowRight', 'assets/images/buttons/arrow_right.png');
+        game.load.image('btn_instructions', 'assets/images/buttons/instructions.png');
+        game.load.image('btn_instructionsHover', 'assets/images/buttons/instructions_hover.png');
+        game.load.image('btn_menu', 'assets/images/buttons/menu.png');
+        game.load.image('btn_play', 'assets/images/buttons/play.png');
+        game.load.image('btn_playHover', 'assets/images/buttons/play_hover.png');
+        game.load.spritesheet('btn_sound', 'assets/images/buttons/sound.png', 35, 30);
         
         //Paddles
-         game.load.image('pad_left', 'assets/images/paddles/left.png');
-         game.load.image('pad_right', 'assets/images/paddles/right.png');
+        game.load.image('pad_left', 'assets/images/paddles/left.png');
+        game.load.image('pad_right', 'assets/images/paddles/right.png');
         
         //LogoBugtennis
         game.load.image('logo_bugtennis', 'assets/images/logo/bugtennis/bugtennis.png');
