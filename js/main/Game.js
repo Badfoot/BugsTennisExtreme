@@ -22,8 +22,8 @@ var gameState = {
             "bg_base"     //image
         );
         game.add.image(
-            50,                 //x position
-            50,                 //y position
+            0,                 //x position
+            0,                 //y position
             "transparent"       //image
         );
         game.add.image(
