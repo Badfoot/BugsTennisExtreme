@@ -111,7 +111,7 @@ Ball.prototype.move = function(){
 
 Ball.prototype.whoIsMyLord = function(playerId){
     
-    Ball.setOwnedBy(playerId);
+    this.setOwnedBy(playerId);
     
     
 }
