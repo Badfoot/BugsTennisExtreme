@@ -64,7 +64,7 @@ var gameState = {
             this.collisions();
             this.moveAll();
         }
-        //reduce++;
+        reduce++;
     },
     
 /*********************************************************/   
@@ -191,24 +191,28 @@ var gameState = {
     collisionOfCollectors: function () {
         ball = this.ball;
         this.skillcollectors.forEach(function (obj, index) {
-            console.log("SKILLCOLLECTOR-"+index);
-            console.log("   Active: "+obj.getActive());
-            //console.log("SKILLCOLLECTOR-"+index+" || x: "+obj.getSprite().x+" // y: "+obj.getSprite().y);
             if (ball.getSprite().x >= obj.getSprite().x && ball.getSprite().x <= obj.getSprite().x+GAMEMECHANICS_RECOLLECTOR_WIDTH){
-                console.log("   BALL IN X-RANGE");
-                //top
                 if (obj.getSprite().y < 100){
-                    if (ball.getSprite().y <= 70 && ball.getSprite().y >= 60 && ball.getSignY()<0){
-                        console.log("   BALL IN Y-RANGE");
+                    console.log("INDEX: "+index);
+                    console.log("   X-INDEX: "+obj.getSprite().x+" to "+(obj.getSprite().x+GAMEMECHANICS_RECOLLECTOR_WIDTH));
+                    console.log("   X-BALL: "+ball.getSprite().x);
+                    console.log("   Y-BALL: "+ball.getSprite().y);
+                    console.log("   SIGN BALL: "+ball.getSignY());
+                    console.log("   SPEED BALL: "+ball.getSpeedY());
+                    //top
+                    if (ball.getSprite().y <= 60 && ball.getSignY()<0){
                         obj.setActive(!obj.getActive());
-                        console.log("SKILLCOLLECTOR-"+index+" Changed!");
                     }
                 } else {
                 //bottom
-                    if (ball.getSprite().y >= GAMEMECHANICS_WORLD_HEIGHT-70 && ball.getSprite().y <= GAMEMECHANICS_WORLD_HEIGHT-60 && ball.getSignY()<0){
-                        console.log("   BALL IN Y-RANGE");
+                    console.log("INDEX: "+index);
+                    console.log("   X-INDEX: "+obj.getSprite().x+" to "+(obj.getSprite().x+GAMEMECHANICS_RECOLLECTOR_WIDTH));
+                    console.log("   X-BALL: "+ball.getSprite().x);
+                    console.log("   Y-BALL: "+ball.getSprite().y);
+                    console.log("   SIGN BALL: "+ball.getSignY());
+                    console.log("   SPEED BALL: "+ball.getSpeedY());
+                    if (ball.getSprite().y >= GAMEMECHANICS_WORLD_HEIGHT-60 && ball.getSignY()>0){
                         obj.setActive(!obj.getActive());
-                        console.log("SKILLCOLLECTOR-"+index+" Changed!");
                     }
                 }
                 
