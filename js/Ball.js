@@ -6,6 +6,7 @@ var Ball = function () {
     this.signX = Phaser.Math.randomSign();
     this.signY = Phaser.Math.randomSign();
     this.maxSpeedY = GAMEMECHANICS_FIELD_HEIGHT/35;
+    this.ownedBy=0;
 };
 
 
@@ -60,6 +61,16 @@ Ball.prototype.getSprite = function(){
     return this.sprite;
 }
 
+//speedX
+Ball.prototype.getOwnedBy = function(){
+    return this.ownedBy;
+}
+
+Ball.prototype.setOwnedBy = function(value){
+    this.ownedBy = value;
+}
+
+
 Ball.prototype.setSprite = function(){
     this.sprite = game.add.sprite(
         GAMEMECHANICS_WORLD_WIDTH/2,    //x position
@@ -96,4 +107,11 @@ Ball.prototype.move = function(){
             this.setSignY(-1);
         }
     }
+}
+
+Ball.prototype.whoIsMyLord = function(playerId){
+    
+    Ball.setOwnedBy(playerId);
+    
+    
 }

@@ -49,3 +49,5 @@ GameMechanics.prototype.createWorld = function(){
     
     return walls;
 }
+
+

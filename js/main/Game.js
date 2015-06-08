@@ -77,7 +77,7 @@ var gameState = {
     /** CREATE ***********************************************/
     /*********************************************************/
     createPlayer1: function () {
-        this.player1 = new Player();
+        this.player1 = new Player(1);
         this.paddle1 = new Paddle();
         this.paddle1.setSpriteImage("pad_left");
         this.paddle1.createPaddle(45+GAMEMECHANICS_MARGIN_PADDLE_TO_SIDE);
@@ -92,7 +92,7 @@ var gameState = {
     },
     
     createPlayer2: function () {
-        this.player2 = new Player();
+        this.player2 = new Player(2);
         this.paddle2 = new Paddle();
         this.paddle2.setSpriteImage("pad_right");
         this.paddle2.createPaddle(GAMEMECHANICS_WORLD_WIDTH-GAMEMECHANICS_MARGIN_PADDLE_TO_SIDE-45);
@@ -149,6 +149,7 @@ var gameState = {
     collisionOfPaddles: function () {
     //paddle 1
         if (this.ball.getSprite().x-5 >= this.paddle1.getSprite().x-5 && this.ball.getSprite().x-5 <= this.paddle1.getSprite().x+5){
+            this.ball.whoIsMyLord(this.ball.getId);
             if(this.ball.getSprite().y >= this.paddle1.getSprite().y-30 && this.ball.getSprite().y <= this.paddle1.getSprite().y+30){
                 this.ball.setSignX(1);
                 if (this.ball.getSignY() == this.paddle1.getSignY()){
@@ -168,6 +169,7 @@ var gameState = {
         } else {
     //paddle 2
             if (this.ball.getSprite().x+5 >= this.paddle2.getSprite().x-5 && this.ball.getSprite().x+5 <= this.paddle2.getSprite().x+5){
+                 this.ball.whoIsMyLord(this.ball.getId);
                 if(this.ball.getSprite().y >= this.paddle2.getSprite().y-30 && this.ball.getSprite().y <= this.paddle2.getSprite().y+30){
                     this.ball.setSignX(-1);
                     if (this.ball.getSignY() == this.paddle2.getSignY()){

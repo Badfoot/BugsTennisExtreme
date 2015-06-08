@@ -1,8 +1,9 @@
 const PLAYER_HP = 100;
 
-var Player = function () {
+var Player = function (id) {
     this.hp = PLAYER_HP;
     this.skillsBoon;
+    this.id=id;
 };
 
 
@@ -22,4 +23,8 @@ Player.prototype.getSkillsBoon = function(){
 
 Player.prototype.setSkillsBoon = function(value){
     this.skillsBoon = value;
+}
+
+Player.prototype.getId= function(){
+    return this.id;
 }
