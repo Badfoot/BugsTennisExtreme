@@ -2,6 +2,9 @@ var loadState = {
 
 	preload: function () {
         
+        //Trasparente
+         game.load.image('transparent', '../assets/images/transparente.png');
+        
         //ball
 		game.load.spritesheet('ball', '../assets/images/ball/ball.png', 20, 20);
         

@@ -22,6 +22,11 @@ var gameState = {
             50,                 //x position
             50,                 //y position
             "imgMaps_field"     //image
+        );        
+        game.add.image(
+            50,                 //x position
+            50,                 //y position
+            "transparent"     //image
         );
     
         //Buttons
@@ -61,6 +66,26 @@ var gameState = {
         this.ball.setImageSprite("ball");
         this.ball.create();
     
+        //SkillCollector 1(arriba derecha)
+    
+    //    this.skillCollector1 = new SkillCollector();    
+  //      this.skillCollector1.setSpriteImage("goodCollector");
+  //      this.skillCollector1.create(GAMEMECHANICS_WORLD_WIDTH-GAMEMECHANICS_MARGIN_PADDLE_TO_SIDE-45, GAMEMECHANICS_WORLD_HEIGHT/2);
+    
+        //SkillCollector 2(arriba izquierda)
+   //     this.skillCollector2 = new SkillCollector();    
+   //     this.skillCollector2.setSpriteImage("goodCollector");
+   //     this.skillCollector2.create(GAMEMECHANICS_WORLD_WIDTH-GAMEMECHANICS_MARGIN_PADDLE_TO_SIDE-45, GAMEMECHANICS_WORLD_HEIGHT/2);
+        
+        //SkillCollector 3(abajo izquierda)
+   //     this.skillCollector3 = new SkillCollector();    
+   //     this.skillCollector3.setSpriteImage("goodCollector");
+  //      this.skillCollector3.create(GAMEMECHANICS_WORLD_WIDTH-GAMEMECHANICS_MARGIN_PADDLE_TO_SIDE-45, GAMEMECHANICS_WORLD_HEIGHT/2);
+        
+        //SkillCollector 4(abajo derecha)
+   //     this.skillCollector4 = new SkillCollector();    
+   //     this.skillCollector4.setSpriteImage("goodCollector");
+   //     this.skillCollector4.create(GAMEMECHANICS_WORLD_WIDTH-GAMEMECHANICS_MARGIN_PADDLE_TO_SIDE-45, GAMEMECHANICS_WORLD_HEIGHT/2);
         //MARCADOR
     
         //audio
@@ -133,6 +158,23 @@ var gameState = {
                 }
             }
         }
+        
+        //Recolectores 1
+        
+       /* if (this.ball.getSprite().x-5 >= this.skillCollector1.getSprite().x-5 && this.ball.getSprite().x-5 <= this.skillCollector1.getSprite().x+5){
+            if(this.ball.getSprite().y >= this.skillCollector1.getSprite().y && this.ball.getSprite().y <= this.skillCollector1.getSprite().y){            
+               
+            }
+            
+        }*/
+        
+        //Recolectores 2  
+        
+        //Recolectores 3
+        
+        //Recolectores 4
+        
+        
         
         
     }

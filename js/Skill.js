@@ -107,3 +107,9 @@ Skill.prototype.getSprite = function(){
 Skill.prototype.setSprite = function(value){
     this.sprite = value;
 }
+
+//Random
+Skill.prototype.numRandom = function(){
+    var skill = Math.floor((Math.random() * 14) + 1);
+    return skill;
+}
