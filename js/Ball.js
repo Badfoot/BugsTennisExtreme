@@ -79,16 +79,20 @@ Ball.prototype.move = function(){
     this.getSprite().x += this.getSpeedX()*this.getSignX();
     this.getSprite().y += this.getSpeedY()*this.getSignY();
     if(this.getSprite().x < 60){
+        this.getSprite().x = 60;
         this.setSignX(1);
     } else {
         if (this.getSprite().x > GAMEMECHANICS_WORLD_WIDTH-60){
+            this.getSprite().x = GAMEMECHANICS_WORLD_WIDTH-60;
             this.setSignX(-1);
         }
     }
     if(this.getSprite().y < 60){
+         this.getSprite().y = 60;
         this.setSignY(1);
     } else {
         if (this.getSprite().y > GAMEMECHANICS_WORLD_HEIGHT-60){
+            this.getSprite().y = GAMEMECHANICS_WORLD_HEIGHT-60;
             this.setSignY(-1);
         }
     }

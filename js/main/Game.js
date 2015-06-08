@@ -64,7 +64,7 @@ var gameState = {
             this.collisions();
             this.moveAll();
         }
-        reduce++;
+        //reduce++;
     },
     
 /*********************************************************/   
@@ -193,25 +193,13 @@ var gameState = {
         this.skillcollectors.forEach(function (obj, index) {
             if (ball.getSprite().x >= obj.getSprite().x && ball.getSprite().x <= obj.getSprite().x+GAMEMECHANICS_RECOLLECTOR_WIDTH){
                 if (obj.getSprite().y < 100){
-                    console.log("INDEX: "+index);
-                    console.log("   X-INDEX: "+obj.getSprite().x+" to "+(obj.getSprite().x+GAMEMECHANICS_RECOLLECTOR_WIDTH));
-                    console.log("   X-BALL: "+ball.getSprite().x);
-                    console.log("   Y-BALL: "+ball.getSprite().y);
-                    console.log("   SIGN BALL: "+ball.getSignY());
-                    console.log("   SPEED BALL: "+ball.getSpeedY());
                     //top
-                    if (ball.getSprite().y <= 60 && ball.getSignY()<0){
+                    if (ball.getSprite().y == 60 && ball.getSignY()>0){
                         obj.setActive(!obj.getActive());
                     }
                 } else {
                 //bottom
-                    console.log("INDEX: "+index);
-                    console.log("   X-INDEX: "+obj.getSprite().x+" to "+(obj.getSprite().x+GAMEMECHANICS_RECOLLECTOR_WIDTH));
-                    console.log("   X-BALL: "+ball.getSprite().x);
-                    console.log("   Y-BALL: "+ball.getSprite().y);
-                    console.log("   SIGN BALL: "+ball.getSignY());
-                    console.log("   SPEED BALL: "+ball.getSpeedY());
-                    if (ball.getSprite().y >= GAMEMECHANICS_WORLD_HEIGHT-60 && ball.getSignY()>0){
+                    if (ball.getSprite().y == GAMEMECHANICS_WORLD_HEIGHT-60 && ball.getSignY()<0){
                         obj.setActive(!obj.getActive());
                     }
                 }
