@@ -1,11 +1,7 @@
-var Movement = function () {
-    
-};
-
-Movement.prototype.movePaddle = function(sprite){
-   //
+function movePlayer (player, cursor) {
+    player.move(cursor);
 }
 
-Movement.prototype.moveBall = function(sprite) {
-   //
+function moveBall (ball) {
+   ball.move();
 }

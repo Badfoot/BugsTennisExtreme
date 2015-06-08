@@ -1,6 +1,6 @@
 var SkillCollector = function () {
 
-    this.active = false;
+    this.active = true;
     this.spriteImage = "";
     this.sprite;
 };
@@ -11,7 +11,13 @@ SkillCollector.prototype.getActive = function(){
 }
 
 SkillCollector.prototype.setActive = function(value){
+    if (value){
+        this.getSprite().animations.play("active");
+    } else {
+        this.getSprite().animations.play("inactive");
+    }
     this.active = value;
+    
 }
 
 //spriteImage
@@ -28,18 +34,18 @@ SkillCollector.prototype.getSprite = function(){
     return this.sprite;
 }
 
-SkillCollector.prototype.setSprite = (x,y){
+SkillCollector.prototype.setSprite = function(x,y){
     this.sprite = game.add.sprite(
         x,                              //x position
         y,                              //y position
         this.getSpriteImage()           //image
     );
+    this.getSprite().animations.add("active", [0], 0, false);
+    this.getSprite().animations.add("inactive", [1], 0, false);
 }
 
 //Create
 
-SkillCollector.prototype.create = function(x){
-    this.setSprite(x);
-    this.sprite.anchor.setTo(0.5, 0.5);
-    
+SkillCollector.prototype.create = function(x, y){
+    this.setSprite(x, y);
 }

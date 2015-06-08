@@ -5,12 +5,15 @@ var gameState = {
     },
     
 /**/create: function () {
+        //DEBUG
+        reduce = 0;
+    
         //GAME
         game.physics.startSystem(Phaser.Physics.ARCADE);
         this.gameController = new GameMechanics();
     
         //WORLD
-        this.walls = this.gameController.createWorld();
+        //this.walls = this.gameController.createWorld();
     
         //Fondo
         game.add.image(
@@ -21,19 +24,59 @@ var gameState = {
         game.add.image(
             50,                 //x position
             50,                 //y position
-            "imgMaps_field"     //image
-        );        
+            "transparent"       //image
+        );
         game.add.image(
             50,                 //x position
             50,                 //y position
-            "transparent"     //image
-        );
+            "imgMaps_field"     //image
+        );        
+        
     
         //Buttons
         var goBack = game.add.button(GAMEMECHANICS_WORLD_WIDTH/2-(106/2), GAMEMECHANICS_WORLD_HEIGHT-45, "btn_menu", function (goBack){goToLvl(FUREMOL_MENU);}, this);
         goBack.input.useHandCursor = true;
     
         //PLAYER 1
+        this.createPlayer1();
+    
+        //PLAYER 2
+        this.createPlayer2();
+    
+        //BALL
+        this.createBall();
+    
+        //SkillCollectors
+        this.createSkillCollectors();
+
+        //MARCADOR
+    
+        //audio
+        
+        //BUTTONS
+        var muteButton = game.add.button(GAMEMECHANICS_WORLD_WIDTH-35-5, GAMEMECHANICS_WORLD_HEIGHT-30-5, "btn_sound", function (muteButton){toggleSound(muteButton);}, this);
+        muteButton.input.useHandCursor = true;
+        muteButton.frame = (game.sound.mute)?1:0;
+    },
+
+/**/update: function () {
+        if(reduce%10 == 0){
+            this.collisions();
+            this.moveAll();
+        }
+        //reduce++;
+    },
+    
+/*********************************************************/   
+///////////////////////////////////////////////////////////
+/** METODOS **********************************************/
+/*********************************************************/
+    
+    /*********************************************************/   
+    ///////////////////////////////////////////////////////////
+    /** CREATE ***********************************************/
+    /*********************************************************/
+    createPlayer1: function () {
         this.player1 = new Player();
         this.paddle1 = new Paddle();
         this.paddle1.setSpriteImage("pad_left");
@@ -46,8 +89,9 @@ var gameState = {
             weapon1: setKey(Phaser.Keyboard.V),
             weapon2: setKey(Phaser.Keyboard.B)
         };
+    },
     
-        //PLAYER 2
+    createPlayer2: function () {
         this.player2 = new Player();
         this.paddle2 = new Paddle();
         this.paddle2.setSpriteImage("pad_right");
@@ -60,66 +104,50 @@ var gameState = {
             weapon1: setKey(Phaser.Keyboard.NUMPAD_2),
             weapon2: setKey(Phaser.Keyboard.NUMPAD_3)
         };
+    },
     
-        //BALL
+    createBall: function () {
         this.ball = new Ball();
         this.ball.setImageSprite("ball");
         this.ball.create();
-    
-        //SkillCollector 1(arriba derecha)
-    
-    //    this.skillCollector1 = new SkillCollector();    
-  //      this.skillCollector1.setSpriteImage("goodCollector");
-  //      this.skillCollector1.create(GAMEMECHANICS_WORLD_WIDTH-GAMEMECHANICS_MARGIN_PADDLE_TO_SIDE-45, GAMEMECHANICS_WORLD_HEIGHT/2);
-    
-        //SkillCollector 2(arriba izquierda)
-   //     this.skillCollector2 = new SkillCollector();    
-   //     this.skillCollector2.setSpriteImage("goodCollector");
-   //     this.skillCollector2.create(GAMEMECHANICS_WORLD_WIDTH-GAMEMECHANICS_MARGIN_PADDLE_TO_SIDE-45, GAMEMECHANICS_WORLD_HEIGHT/2);
-        
-        //SkillCollector 3(abajo izquierda)
-   //     this.skillCollector3 = new SkillCollector();    
-   //     this.skillCollector3.setSpriteImage("goodCollector");
-  //      this.skillCollector3.create(GAMEMECHANICS_WORLD_WIDTH-GAMEMECHANICS_MARGIN_PADDLE_TO_SIDE-45, GAMEMECHANICS_WORLD_HEIGHT/2);
-        
-        //SkillCollector 4(abajo derecha)
-   //     this.skillCollector4 = new SkillCollector();    
-   //     this.skillCollector4.setSpriteImage("goodCollector");
-   //     this.skillCollector4.create(GAMEMECHANICS_WORLD_WIDTH-GAMEMECHANICS_MARGIN_PADDLE_TO_SIDE-45, GAMEMECHANICS_WORLD_HEIGHT/2);
-        //MARCADOR
-    
-        //audio
-    
-        //particles
-        
-        //BUTTONS
-        var muteButton = game.add.button(GAMEMECHANICS_WORLD_WIDTH-35-5, GAMEMECHANICS_WORLD_HEIGHT-30-5, "btn_sound", function (muteButton){toggleSound(muteButton);}, this);
-        muteButton.input.useHandCursor = true;
-        muteButton.frame = (game.sound.mute)?1:0;
-    },
-
-/**/update: function () {
-        this.movePlayers();
-        this.moveBall();
-        this.collisions();
     },
     
-/*********************************************************/   
-///////////////////////////////////////////////////////////
-/** METODOS **********************************************/
-/*********************************************************/
+    createSkillCollectors: function () {
+        this.skillcollectors = [];
+        this.skillcollectors[0] = new SkillCollector();
+        this.skillcollectors[1] = new SkillCollector();
+        this.skillcollectors[2] = new SkillCollector();
+        this.skillcollectors[3] = new SkillCollector();
     
-    movePlayers: function () {
-        this.paddle1.move(this.cursor1);
-        this.paddle2.move(this.cursor2);
+        this.skillcollectors.forEach(function (obj, index){
+            obj.setSpriteImage("goodCollector");
+        });
+    
+        this.skillcollectors[0].create(150, 10);
+        this.skillcollectors[1].create(350, 10);
+        this.skillcollectors[2].create(150, GAMEMECHANICS_WORLD_HEIGHT-GAMEMECHANICS_RECOLLECTOR_HEIGHT-10);
+        this.skillcollectors[3].create(350, GAMEMECHANICS_WORLD_HEIGHT-GAMEMECHANICS_RECOLLECTOR_HEIGHT-10);
     },
     
-    moveBall: function () {
-        this.ball.move();
+    /*********************************************************/   
+    ///////////////////////////////////////////////////////////
+    /** PHYSICS **********************************************/
+    /*********************************************************/
+    
+    moveAll: function () {
+        movePlayer(this.paddle1, this.cursor1);
+        movePlayer(this.paddle2, this.cursor2);
+        moveBall(this.ball);
     },
+    
     
     collisions: function () {
-        //paddle 1
+        this.collisionOfPaddles();
+        this.collisionOfCollectors();
+    },
+    
+    collisionOfPaddles: function () {
+    //paddle 1
         if (this.ball.getSprite().x-5 >= this.paddle1.getSprite().x-5 && this.ball.getSprite().x-5 <= this.paddle1.getSprite().x+5){
             if(this.ball.getSprite().y >= this.paddle1.getSprite().y-30 && this.ball.getSprite().y <= this.paddle1.getSprite().y+30){
                 this.ball.setSignX(1);
@@ -138,7 +166,7 @@ var gameState = {
                 }
             }
         } else {
-            //paddle 2
+    //paddle 2
             if (this.ball.getSprite().x+5 >= this.paddle2.getSprite().x-5 && this.ball.getSprite().x+5 <= this.paddle2.getSprite().x+5){
                 if(this.ball.getSprite().y >= this.paddle2.getSprite().y-30 && this.ball.getSprite().y <= this.paddle2.getSprite().y+30){
                     this.ball.setSignX(-1);
@@ -158,24 +186,33 @@ var gameState = {
                 }
             }
         }
-        
-        //Recolectores 1
-        
-       /* if (this.ball.getSprite().x-5 >= this.skillCollector1.getSprite().x-5 && this.ball.getSprite().x-5 <= this.skillCollector1.getSprite().x+5){
-            if(this.ball.getSprite().y >= this.skillCollector1.getSprite().y && this.ball.getSprite().y <= this.skillCollector1.getSprite().y){            
-               
+    },
+    
+    collisionOfCollectors: function () {
+        ball = this.ball;
+        this.skillcollectors.forEach(function (obj, index) {
+            console.log("SKILLCOLLECTOR-"+index);
+            console.log("   Active: "+obj.getActive());
+            //console.log("SKILLCOLLECTOR-"+index+" || x: "+obj.getSprite().x+" // y: "+obj.getSprite().y);
+            if (ball.getSprite().x >= obj.getSprite().x && ball.getSprite().x <= obj.getSprite().x+GAMEMECHANICS_RECOLLECTOR_WIDTH){
+                console.log("   BALL IN X-RANGE");
+                //top
+                if (obj.getSprite().y < 100){
+                    if (ball.getSprite().y <= 70 && ball.getSprite().y >= 60 && ball.getSignY()<0){
+                        console.log("   BALL IN Y-RANGE");
+                        obj.setActive(!obj.getActive());
+                        console.log("SKILLCOLLECTOR-"+index+" Changed!");
+                    }
+                } else {
+                //bottom
+                    if (ball.getSprite().y >= GAMEMECHANICS_WORLD_HEIGHT-70 && ball.getSprite().y <= GAMEMECHANICS_WORLD_HEIGHT-60 && ball.getSignY()<0){
+                        console.log("   BALL IN Y-RANGE");
+                        obj.setActive(!obj.getActive());
+                        console.log("SKILLCOLLECTOR-"+index+" Changed!");
+                    }
+                }
+                
             }
-            
-        }*/
-        
-        //Recolectores 2  
-        
-        //Recolectores 3
-        
-        //Recolectores 4
-        
-        
-        
-        
+        });
     }
 }

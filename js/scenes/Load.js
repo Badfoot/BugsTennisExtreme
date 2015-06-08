@@ -9,8 +9,7 @@ var loadState = {
 		game.load.spritesheet('ball', '../assets/images/ball/ball.png', 20, 20);
         
         //icon_skillCollector
-        game.load.image('badCollector', '../assets/images/icon_skillCollector/badCollector.png');
-        game.load.image('goodCollector', '../assets/images/icon_skillCollector/goodApple.png');
+        game.load.spritesheet('goodCollector', '../assets/images/icon_skillCollector/goodApple.png', 100, 50);
         
         //icon_skills
 	    game.load.image('ico_changeDirection', '../assets/images/icon_skills/change_direction.jpg');
