@@ -9,6 +9,7 @@ var Player = function (id) {
     this.skills[3] = null;
     this.id = id;
     this.skillPlaces;
+    this.score=0;
 };
 
 
@@ -19,6 +20,10 @@ Player.prototype.getHp = function(){
 }
 
 Player.prototype.setHp = function(value){
+    if(value < 0){
+        value= this.getHp();
+    }
+    
     this.hp = value;
 }
 
@@ -52,6 +57,13 @@ Player.prototype.removeSkill = function(skill){
     return false;
 }
 
+Player.prototype.removeSkills = function(){
+    this.skills.forEach(function (obj){
+        obj = null;
+    });
+    return true;
+}
+
 Player.prototype.getSkillPlaces = function(){
     return this.skillPlaces;
 }
@@ -59,4 +71,14 @@ Player.prototype.getSkillPlaces = function(){
 Player.prototype.setSkillPlaces = function(skillplaces){
     this.skillPlaces = skillplaces;
 }
+
+//Score
+Player.prototype.getScore = function(){
+    return this.score;
+}
+
+Player.prototype.setScore = function(value){
+    this.score = value;
+}
+   
                         

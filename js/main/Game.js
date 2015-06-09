@@ -57,7 +57,8 @@ var gameState = {
         this.createSkillImages();
 
         //MARCADOR
-    
+        this.createText();
+        this.createTextLive();
         //audio
         
         //BUTTONS
@@ -70,6 +71,20 @@ var gameState = {
         if(reduce%10 == 0){
             this.collisions();
             this.moveAll();
+            if(this.player1.getHp() <=0){
+                this.player2.setScore(this.player2.getScore()+1);
+                this.reset();
+            }
+            if(this.player2.getHp() <=0){
+                this.player1.setScore(this.player1.getScore()+1);
+                this.reset();
+            }
+            
+            this.scorePlayer1Life.text = this.player1.getHp() + "%";
+            this.scorePlayer2Life.text = this.player2.getHp() + "%";
+            
+            this.scorePlayer1.text = this.player1.getScore();
+            this.scorePlayer2.text = this.player2.getScore();
         }
         //reduce++;
     },
@@ -191,6 +206,103 @@ var gameState = {
         this.skillImages[7] = null;
     },
     
+    createText: function(){
+     //SCORE TEXT
+        this.scorePlayer1 = game.add.text(
+            GAMEMECHANICS_WORLD_WIDTH/2-45,
+            25,
+            this.score = this.player1.getScore(),
+            {
+                font: "24px Arial",
+                fill: "#ffffff"
+            }
+        );
+        this.scoreLabelUnion = game.add.text(
+            GAMEMECHANICS_WORLD_WIDTH/2,
+            25,
+            this.score = ":",
+            {
+                font: "24px Arial",
+                fill: "#ffffff"
+            }
+        );
+        this.scorePlayer2 = game.add.text(
+            GAMEMECHANICS_WORLD_WIDTH/2+30,
+            25,
+            this.score = this.player2.getScore(),
+            {
+                font: "24px Arial",
+                fill: "#ffffff"
+            }
+        );
+        
+    },
+    
+    createTextLive: function(){
+    
+    //LIVE TEXT
+        this.scorePlayer1Label = game.add.text(
+            75,
+            10,
+            this.score = "Player 1",
+            {
+                font: "18px Arial",
+                fill: "#ffffff"
+            }
+        );
+        this.scorePlayer1Life = game.add.text(
+            75,
+            30,
+            this.score = this.player1.getHp()+"%",
+            {
+                font: "18px Arial",
+                fill: "#ffffff"
+            }
+        );
+        this.scorePlayer2Label = game.add.text(
+            GAMEMECHANICS_WORLD_WIDTH-125,
+            10,
+            this.score = "Player 2",
+            {
+                font: "18px Arial",
+                fill: "#ffffff"
+            }
+        );
+        this.scorePlayer2Life = game.add.text(
+           GAMEMECHANICS_WORLD_WIDTH-125,
+           30,
+            this.score = this.player2.getHp()+"%",
+            {
+                font: "18px Arial",
+                fill: "#ffffff"
+            }
+        );
+        
+    },
+    
+     reset: function () {
+         this.player1.setHp(PLAYER_HP);
+         this.player2.setHp(PLAYER_HP);
+         this.skillcollectors[0].removeSkillsFrom(this.player1, this.skillImages);
+         this.skillcollectors[0].removeSkillsFrom(this.player2, this.skillImages);
+         
+         
+         this.ball.getSprite().destroy();
+         this.paddle1.getSprite().destroy();
+         this.paddle2.getSprite().destroy();
+         
+         this.paddle1 = new Paddle();
+         this.paddle1.setSpriteImage("pad_left");
+         this.paddle1.createPaddle(45+GAMEMECHANICS_MARGIN_PADDLE_TO_SIDE);
+         
+         this.paddle2 = new Paddle();
+         this.paddle2.setSpriteImage("pad_right");
+         this.paddle2.createPaddle(GAMEMECHANICS_WORLD_WIDTH-GAMEMECHANICS_MARGIN_PADDLE_TO_SIDE-45);
+         
+         this.createBall();
+     },
+ 
+    
     /*********************************************************/   
     ///////////////////////////////////////////////////////////
     /** PHYSICS **********************************************/
@@ -199,7 +311,8 @@ var gameState = {
     moveAll: function () {
         movePlayer(this.paddle1, this.cursor1);
         movePlayer(this.paddle2, this.cursor2);
-        moveBall(this.ball);
+        moveBall(this.ball, this.player1, this.player2);
+        
     },
     
     
@@ -286,4 +399,6 @@ var gameState = {
             });
         }
     }
+    
+    
 }
