@@ -48,6 +48,13 @@ var gameState = {
     
         //SkillCollectors
         this.createSkillCollectors();
+    
+        //skillPlaces
+        this.createSkillPlaces();
+    
+        //createSkills
+        this.createSkills();
+        this.createSkillImages();
 
         //MARCADOR
     
@@ -129,6 +136,60 @@ var gameState = {
         this.skillcollectors[3].create(350, GAMEMECHANICS_WORLD_HEIGHT-GAMEMECHANICS_RECOLLECTOR_HEIGHT-10);
     },
     
+    createSkillPlaces: function () {
+        this.skillPlacesOfP1 = [];
+        this.skillPlacesOfP1[0] = new SkillPlace(1, 1);
+        this.skillPlacesOfP1[1] = new SkillPlace(1, 2);
+        this.skillPlacesOfP1[2] = new SkillPlace(1, 3);
+        this.skillPlacesOfP1[3] = new SkillPlace(1, 4);
+        this.skillPlacesOfP1.forEach(function (obj, index){
+            obj.createSkillPlace(1, index+1);
+        });
+        
+        this.player1.setSkillPlaces = this.skillPlacesOfP1;
+        
+        this.skillPlacesOfP2 = [];
+        this.skillPlacesOfP2[0] = new SkillPlace(2, 1);
+        this.skillPlacesOfP2[1] = new SkillPlace(2, 2);
+        this.skillPlacesOfP2[2] = new SkillPlace(2, 3);
+        this.skillPlacesOfP2[3] = new SkillPlace(2, 4);
+        this.skillPlacesOfP2.forEach(function (obj, index){
+            obj.createSkillPlace(2, index+1);
+        });
+        
+        this.player2.setSkillPlaces = this.skillPlacesOfP2;
+    },
+    
+    createSkills: function () {
+        this.skills = [];
+        this.skills[0] = new Skill(SKILL_BOON, SKILL_WALL, 0, 2, 0, 0, 0, "ico_wall");
+        this.skills[1] = new Skill(SKILL_BOON, SKILL_VEL_GROW, 0, 0, 0, 0, 4, "ico_velGrow");
+        this.skills[2] = new Skill(SKILL_BOON, SKILL_POTION, 0, 0, 10, 0, 0, "ico_potion");
+        this.skills[3] = new Skill(SKILL_BOON, SKILL_PADDLE_GROW, 0, 0, 0, 0, 4, "ico_paddleGrow");
+        this.skills[4] = new Skill(SKILL_BOON, SKILL_HEAL_STATE, 0, 0, 0, 0, 0, "ico_healState");
+        this.skills[5] = new Skill(SKILL_BOON, SKILL_SHIELD, 1, 0, 0, 0, 0, "ico_shield");
+        this.skills[6] = new Skill(SKILL_WEAPON, SKILL_POISON, 0, 0, 5, 2, 12, "ico_poison");
+        this.skills[7] = new Skill(SKILL_WEAPON, SKILL_MISSILE, 0, 0, 10, 0, 0, "ico_misil");
+        this.skills[8] = new Skill(SKILL_WEAPON, SKILL_INVISIBLE, 0, 0, 0, 0, 3, "ico_invisible");
+        this.skills[9] = new Skill(SKILL_WEAPON, SKILL_CHANGE_DIRECTION, 0, 0, 0, 0, 0, "ico_changeDirection");
+        this.skills[10] = new Skill(SKILL_WEAPON, SKILL_PADDLE_DWARF, 0, 0, 0, 0, 4, "ico_paddleDwarf");
+        this.skills[11] = new Skill(SKILL_WEAPON, SKILL_VEL_DWARF, 0, 0, 0, 0, 4, "ico_velDwarf");
+        this.skills[12] = new Skill(SKILL_WEAPON, SKILL_VULNERABILITY, 0, 1, 0, 0, 0, "ico_vulnerable");
+        this.skills[13] = new Skill(SKILL_WEAPON, SKILL_TURN_OFF_SKILL, 0, 0, 0, 0, 2, "ico_turnOffSkillCollector");
+    },
+    
+    createSkillImages: function () {
+        this.skillImages = [];
+        this.skillImages[0] = null;
+        this.skillImages[1] = null;
+        this.skillImages[2] = null;
+        this.skillImages[3] = null;
+        this.skillImages[4] = null;
+        this.skillImages[5] = null;
+        this.skillImages[6] = null;
+        this.skillImages[7] = null;
+    },
+    
     /*********************************************************/   
     ///////////////////////////////////////////////////////////
     /** PHYSICS **********************************************/
@@ -149,7 +210,7 @@ var gameState = {
     collisionOfPaddles: function () {
     //paddle 1
         if (this.ball.getSprite().x-5 >= this.paddle1.getSprite().x-5 && this.ball.getSprite().x-5 <= this.paddle1.getSprite().x+5){
-            this.ball.whoIsMyLord(this.ball.getId);
+            this.ball.setOwnedBy(this.player1);
             if(this.ball.getSprite().y >= this.paddle1.getSprite().y-30 && this.ball.getSprite().y <= this.paddle1.getSprite().y+30){
                 this.ball.setSignX(1);
                 if (this.ball.getSignY() == this.paddle1.getSignY()){
@@ -169,7 +230,7 @@ var gameState = {
         } else {
     //paddle 2
             if (this.ball.getSprite().x+5 >= this.paddle2.getSprite().x-5 && this.ball.getSprite().x+5 <= this.paddle2.getSprite().x+5){
-                 this.ball.whoIsMyLord(this.ball.getId);
+                this.ball.setOwnedBy(this.player2);
                 if(this.ball.getSprite().y >= this.paddle2.getSprite().y-30 && this.ball.getSprite().y <= this.paddle2.getSprite().y+30){
                     this.ball.setSignX(-1);
                     if (this.ball.getSignY() == this.paddle2.getSignY()){
@@ -192,21 +253,24 @@ var gameState = {
     
     collisionOfCollectors: function () {
         ball = this.ball;
-        this.skillcollectors.forEach(function (obj, index) {
-            if (ball.getSprite().x >= obj.getSprite().x && ball.getSprite().x <= obj.getSprite().x+GAMEMECHANICS_RECOLLECTOR_WIDTH){
-                if (obj.getSprite().y < 100){
-                    //top
-                    if (ball.getSprite().y == 60 && ball.getSignY()>0){
-                        obj.setActive(!obj.getActive());
-                    }
-                } else {
-                //bottom
-                    if (ball.getSprite().y == GAMEMECHANICS_WORLD_HEIGHT-60 && ball.getSignY()<0){
-                        obj.setActive(!obj.getActive());
+        skills = this.skills;
+        skillImages = this.skillImages;
+        if (this.ball.getOwnedBy() != null){
+            this.skillcollectors.forEach(function (obj, index) {
+                if (ball.getSprite().x >= obj.getSprite().x && ball.getSprite().x <= obj.getSprite().x+GAMEMECHANICS_RECOLLECTOR_WIDTH){
+                    if (obj.getSprite().y < 100){
+                        //top
+                        if (ball.getSprite().y == 60 && ball.getSignY()>0){
+                            obj.doEvent(ball.getOwnedBy(), skills, skillImages);
+                        }
+                    } else {
+                    //bottom
+                        if (ball.getSprite().y == GAMEMECHANICS_WORLD_HEIGHT-60 && ball.getSignY()<0){
+                            obj.doEvent(ball.getOwnedBy(), skills, skillImages);
+                        }
                     }
                 }
-                
-            }
-        });
+            });
+        }
     }
 }

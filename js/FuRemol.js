@@ -62,3 +62,11 @@ function keyCapture(key){
     }
 }
 
+
+//OTHERS
+
+//Random
+function random(amount){
+    return Math.floor((Math.random() * amount));
+}
+

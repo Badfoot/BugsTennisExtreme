@@ -49,3 +49,73 @@ SkillCollector.prototype.setSprite = function(x,y){
 SkillCollector.prototype.create = function(x, y){
     this.setSprite(x, y);
 }
+
+
+SkillCollector.prototype.doEvent = function(player, skills, skillImages){
+    if(!this.getActive()){
+        var gameSystem = new GameMechanics();
+        this.removeSkillsFrom(player, skillImages);
+    } else {
+       this.giveSkill(player, skills, skillImages);
+    }
+}
+
+SkillCollector.prototype.giveSkill = function(player, skills, skillImages){
+    if (this.haveFreeSkillPlace(player)){
+        var giveIt = false;
+        var freePlace;
+        var skill;
+        do {
+            skill = skills[random(skills.lenght)];
+            freePlace = this.getFirstFreePlaceOfTypeSkill(player, skill);
+            player.setSkill(freePlace, skill);
+            giveIt = true;
+        } while (!giveIt);
+        if(player.getId() == 2){
+            freePlace += 4;
+        }
+        
+        skillImages[freePlace] = game.add.image(
+            player.getSkillPlaces()[freePlace].getX(),
+            player.getSkillPlaces()[freePlace].getY(),
+            skill.getImage()
+        );
+    }
+}
+
+SkillCollector.prototype.haveFreeSkillPlace = function(player){
+    for (var i; i<player.getSkillPlaces(); i++){
+        if(player.getSkillPlaces()[i].getFree()){
+            return true;
+        }
+    }
+    return false;
+}
+
+SkillCollector.prototype.getFirstFreePlaceOfTypeSkill = function(player, skill){
+    var index = 0;
+    for (var i; i<player.getSkillPlaces(); i++){
+        if(player.getSkillPlaces()[i].getFree()){
+            if (i<2 && skill.getTypeOf()<2){
+                index = i;
+            } else if(i>=2 && skill.getTypeOf()>=2) {
+                index = i;
+            }
+        }
+    }
+    return index;
+}
+
+SkillCollector.prototype.removeSkillsFrom = function(player, skillImages){
+    var from = 0;
+    var to = 4;
+    if(player.getId() == 2){
+        from = to;
+        to *= 2;
+    } 
+    for (var i=from; i<to; i++){
+        if(skillImages[i]!=null){
+            skillImages[i].destroy();
+        }
+    }
+}

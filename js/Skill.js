@@ -1,34 +1,30 @@
-    const SKILL_BOON = true;
-    const SKILL_DEBUF = false;
-    const SKILL_WALL= 1;
-    const SKILL_VEL_GROW= 4;
-    const SKILL_POTION = 3;
-    const SKILL_PADDLE_STATE = 5;
-    const SKILL_HEAL_STATE = 5;
-    const SKILL_SHIELD = 6;
-    const SKILL_POSION = 7;
-    const SKILL_INVISIBLE = 9;
-    const SKILL_MISSILE = 8;
-    const SKILL_CHANGE_DIRECTION = 10;
-    const SKILL_PADDLE_DWARF = 11;
-    const SKILL_VEL_DWARF = 12;
-    const SKILL_VULNERABILITY = 13;
-    const SKILL_TURN_OFF_SKILL = 14;
+const SKILL_BOON = true;
+const SKILL_WEAPON = false;
+const SKILL_WALL= 0;
+const SKILL_VEL_GROW= 1;
+const SKILL_POTION = 2;
+const SKILL_PADDLE_GROW = 3;
+const SKILL_HEAL_STATE = 4;
+const SKILL_SHIELD = 5;
+const SKILL_POISON = 6;
+const SKILL_INVISIBLE = 7;
+const SKILL_MISSILE = 8;
+const SKILL_CHANGE_DIRECTION = 9;
+const SKILL_PADDLE_DWARF = 10;
+const SKILL_VEL_DWARF = 11;
+const SKILL_VULNERABILITY = 12;
+const SKILL_TURN_OFF_SKILL = 13;
 
-var Skill = function () {
-    
-
-    this.boon=false;
-    this.typeOf=0;
-    this.hits=0;
-    this.lives=0;
-    this.liveAmount=0;
-    this.howOften=0.00;
-    this.duration=0.00;
-    this.sprite;
-    
+var Skill = function (boon, typeOf, hits, lives, liveAmount, howOften, duration, image) {
+    this.boon = boon;
+    this.typeOf = typeOf;
+    this.hits = hits;
+    this.lives = lives;
+    this.liveAmount = liveAmount;
+    this.howOften = howOften;
+    this.duration = duration;
+    this.image = image;
 };
-
 
 //boon
 Skill.prototype.getBoon = function(){
@@ -106,10 +102,4 @@ Skill.prototype.getSprite = function(){
 
 Skill.prototype.setSprite = function(value){
     this.sprite = value;
-}
-
-//Random
-Skill.prototype.numRandom = function(){
-    var skill = Math.floor((Math.random() * 14) + 1);
-    return skill;
 }

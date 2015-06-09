@@ -2,8 +2,17 @@ var loadState = {
 
 	preload: function () {
         
+        game.add.image(100, 50, 'furemolLogo');
+        
+        var loadingLabel = game.add.text(game.world.centerX, 150, 'loading...', { font: '30px Arial', fill: '#ffffff' });
+		loadingLabel.anchor.setTo(0.5, 0.5);
+
+		var progressBar = game.add.sprite(game.world.centerX, 200, 'progressBar');
+		progressBar.anchor.setTo(0.5, 0.5);
+		game.load.setPreloadSprite(progressBar);
+        
         //Trasparente
-         game.load.image('transparent', '../assets/images/transparente.png');
+        game.load.image('transparent', '../assets/images/transparente.png');
         
         //ball
 		game.load.spritesheet('ball', '../assets/images/ball/ball.png', 20, 20);
@@ -26,6 +35,12 @@ var loadState = {
         game.load.image('ico_velGrow', '../assets/images/icon_skills/vel_grow.jpg');
         game.load.image('ico_vulnerable', '../assets/images/icon_skills/vulnerable.jpg');
         game.load.image('ico_wall', '../assets/images/icon_skills/wall.jpg');
+        game.load.image('ico_void', '../assets/images/icon_skills/placeToSkill.jpg');
+        
+        //iconeffects
+        game.load.image('effect_beeToLeft', '../assets/images/skillEffects/beeToLeft.png');
+        game.load.image('effect_beeToRight', '../assets/images/skillEffects/beeToRight.png');
+        game.load.image('effect_wall', '../assets/images/skillEffects/wall.jpg');
         
         //background
         game.load.image('bg_about', '../assets/images/backgrounds/about.jpg');
@@ -34,7 +49,6 @@ var loadState = {
         game.load.image('bg_instructions1', '../assets/images/backgrounds/instructions_mov.jpg');
         game.load.image('bg_main', '../assets/images/backgrounds/main.jpg');
         game.load.image('bg_base', '../assets/images/backgrounds/baseBackground.jpg');
-        
         
         //Buttons
         game.load.image('btn_about', '../assets/images/buttons/about.png');
@@ -51,12 +65,6 @@ var loadState = {
         //Paddles
         game.load.image('pad_left', '../assets/images/paddles/left.png');
         game.load.image('pad_right', '../assets/images/paddles/right.png');
-        
-        //LogoBugtennis
-        game.load.image('logo_bugtennis', '../assets/images/logo/bugtennis/bugtennis.png');
-        
-        //logofuremol
-        game.load.image('logo_furemolLogo', '../assets/images/logo/furemol/furemolLogo.png');
         
         //imageMaps
         game.load.image('imgMaps_field', '../assets/images/imagemaps/field.jpg');

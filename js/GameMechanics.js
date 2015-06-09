@@ -1,4 +1,5 @@
 const GAMEMECHANICS_WALL_TOUCHED = 10;
+const GAMEMECHANICS_RECOLECTOR_TOUCHED = 10;
 const GAMEMECHANICS_WORLD_WIDTH = 600;
 const GAMEMECHANICS_WORLD_HEIGHT = 400;
 const GAMEMECHANICS_MARGIN_PADDLE_TO_SIDE = 20;
@@ -15,11 +16,14 @@ var GameMechanics = function () {
 };
 
 GameMechanics.prototype.increaseLife = function(howMany, player){
-   //
+    player.setHp(player.getHp()+howMany);
 }
 
 GameMechanics.prototype.decreaseLife = function(howMany, player) {
-   //
+    if(howMany > player.getHp()){
+        howMany = player.getHp();
+    }
+    player.setHp(player.getHp()-howMany);
 }
 
 GameMechanics.prototype.createWorld = function(){
