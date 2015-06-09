@@ -1,8 +1,11 @@
-var Missile = function () {
+const MISSILE_TO_LEFT = "effect_beeToLeft";
+const MISSILE_TO_RIGHT = "effect_beeToRight";
 
+
+var Missile = function () {
     this.speed = 0;
     this.sprite;
-    this.spriteImagre="";
+    this.spriteImage="";
 };
 
 
@@ -29,15 +32,37 @@ Missile.prototype.setSprite = function(x, y){
 }
 
 //spriteImage
-Missile.prototype.getSpriteImagre = function(){
-    return this.spriteImagre;
+Missile.prototype.getSpriteImage = function(){
+    return this.spriteImage;
 }
 
-Missile.prototype.setSpriteImagre = function(value){
-    this.spriteImagre = value;
+Missile.prototype.setSpriteImage = function(value){
+    this.spriteImage = value;
 }
 
 Missile.prototype.createMissile = function(x, y){
     this.setSprite(x, y);
     this.sprite.anchor.setTo(0.5, 0.5);
+}
+
+Missile.prototype.move = function (){
+    this.getSprite().x += this.getSpeed();
+}
+
+Missile.prototype.impact = function (targetPaddle, targetPlayer, owner) {
+    var sprite = this.getSprite();
+    var paddle = targetPaddle.getSprite();
+    if (sprite.y-10 >= paddle.y-30 && sprite.y+10 <= paddle.y +30){
+        if(sprite.x+9 >= paddle.x && sprite.x-9 <= paddle.x){
+            sprite.destroy();
+            if (!targetPaddle.getHaveShield()){
+                system = new GameMechanics();
+                system.decreaseLife(10, targetPlayer);
+            } else {
+                targetPaddle.setHaveShield(false);
+            }
+            owner.setMissile(null);
+        }
+    }
+    
 }

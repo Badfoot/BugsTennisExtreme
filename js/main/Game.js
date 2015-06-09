@@ -71,6 +71,9 @@ var gameState = {
         if(reduce%10 == 0){
             this.collisions();
             this.moveAll();
+            this.skillListeners();
+            
+            
             if(this.player1.getHp() <=0){
                 this.player2.setScore(this.player2.getScore()+1);
                 this.reset();
@@ -209,7 +212,7 @@ var gameState = {
     createText: function(){
      //SCORE TEXT
         this.scorePlayer1 = game.add.text(
-            GAMEMECHANICS_WORLD_WIDTH/2-45,
+            GAMEMECHANICS_WORLD_WIDTH/2-30,
             25,
             this.score = this.player1.getScore(),
             {
@@ -227,7 +230,7 @@ var gameState = {
             }
         );
         this.scorePlayer2 = game.add.text(
-            GAMEMECHANICS_WORLD_WIDTH/2+30,
+            GAMEMECHANICS_WORLD_WIDTH/2+20,
             25,
             this.score = this.player2.getScore(),
             {
@@ -235,7 +238,6 @@ var gameState = {
                 fill: "#ffffff"
             }
         );
-        
     },
     
     createTextLive: function(){
@@ -280,26 +282,27 @@ var gameState = {
         
     },
     
-     reset: function () {
-         this.player1.setHp(PLAYER_HP);
-         this.player2.setHp(PLAYER_HP);
-         this.skillcollectors[0].removeSkillsFrom(this.player1, this.skillImages);
-         this.skillcollectors[0].removeSkillsFrom(this.player2, this.skillImages);
-         
-         
-         this.ball.getSprite().destroy();
-         this.paddle1.getSprite().destroy();
-         this.paddle2.getSprite().destroy();
-         
-         this.paddle1 = new Paddle();
-         this.paddle1.setSpriteImage("pad_left");
-         this.paddle1.createPaddle(45+GAMEMECHANICS_MARGIN_PADDLE_TO_SIDE);
-         
-         this.paddle2 = new Paddle();
-         this.paddle2.setSpriteImage("pad_right");
-         this.paddle2.createPaddle(GAMEMECHANICS_WORLD_WIDTH-GAMEMECHANICS_MARGIN_PADDLE_TO_SIDE-45);
-         
-         this.createBall();
+    reset: function () {
+        this.paddle1.resetSkills();
+        this.paddle2.resetSkills();
+        this.player1.setHp(PLAYER_HP);
+        this.player2.setHp(PLAYER_HP);
+        this.skillcollectors[0].removeSkillsFrom(this.player1, this.skillImages);
+        this.skillcollectors[0].removeSkillsFrom(this.player2, this.skillImages);
+        
+        this.ball.getSprite().destroy();
+        this.paddle1.getSprite().destroy();
+        this.paddle2.getSprite().destroy();
+        
+        this.paddle1 = new Paddle();
+        this.paddle1.setSpriteImage("pad_left");
+        this.paddle1.createPaddle(45+GAMEMECHANICS_MARGIN_PADDLE_TO_SIDE);
+        
+        this.paddle2 = new Paddle();
+        this.paddle2.setSpriteImage("pad_right");
+        this.paddle2.createPaddle(GAMEMECHANICS_WORLD_WIDTH-GAMEMECHANICS_MARGIN_PADDLE_TO_SIDE-45);
+        
+        this.createBall();
      },
  
     
@@ -315,10 +318,16 @@ var gameState = {
         
     },
     
+    skillListeners: function () {
+        this.paddle1.skillListener(this.player1, this.cursor1, this.skillImages, this.ball);
+        this.paddle2.skillListener(this.player2, this.cursor2, this.skillImages, this.ball);
+    },
+    
     
     collisions: function () {
         this.collisionOfPaddles();
         this.collisionOfCollectors();
+        this.collisionOfMissiles();
     },
     
     collisionOfPaddles: function () {
@@ -398,7 +407,19 @@ var gameState = {
                 }
             });
         }
+    },
+    
+    collisionOfMissiles: function () {
+        missile = null;
+        if(this.paddle1.getMissile() != null){
+            missile = this.paddle1.getMissile();
+            missile.move();
+            missile.impact(this.paddle2, this.player2, this.paddle1);
+        }
+        if(this.paddle2.getMissile() != null){
+            missile = this.paddle2.getMissile();
+            missile.move();
+            missile.impact(this.paddle1, this.player1, this.paddle2);
+        }
     }
-    
-    
 }

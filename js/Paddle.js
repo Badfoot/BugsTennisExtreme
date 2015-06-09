@@ -1,13 +1,14 @@
 var Paddle = function () {
 
-    this.speed=GAMEMECHANICS_FIELD_HEIGHT/100;
-    this.haveShield=true;
-    this.isVulnerable=false;
-    this.poisoned=false;
-    this.isInvisible=false;
+    this.speed = GAMEMECHANICS_PADDLE_SPEED;
+    this.haveShield = false;
+    this.isVulnerable = false;
+    this.poisoned = false;
+    this.isInvisible = false;
     this.spriteImage = "";
     this.sprite;
-    this.wall;
+    this.wall = null;
+    this.missile  = null;
     this.signY = 0;
 };
 
@@ -39,6 +40,16 @@ Paddle.prototype.getIsVulnerable = function(){
 
 Paddle.prototype.setIsVulnerable = function(value){
     this.isVulnerable = value;
+}
+
+//isVulnerable
+
+Paddle.prototype.getMissile = function(){
+    return this.missile;
+}
+
+Paddle.prototype.setMissile = function(value){
+    this.missile = value;
 }
 
 //poisoned
@@ -126,4 +137,41 @@ Paddle.prototype.move = function(cursor){
     } else {
         this.signY = 0;
     }
+}
+
+Paddle.prototype.skillListener = function (player, cursor, skillImages, ball){
+    var skillIndex = -1;
+    var skillPlaceIncex = -1;
+    if(cursor.boon1.isDown){
+        skillIndex = 0;
+    } else if(cursor.boon2.isDown){
+        skillIndex = 1;
+    } else if(cursor.weapon1.isDown){
+        skillIndex = 2;
+    } else if(cursor.weapon2.isDown){
+        skillIndex = 3;
+    }
+    if (skillIndex>=0){
+        skillPlaceIncex = skillIndex;
+        if(player.getId()==2){
+            skillPlaceIncex += 4;
+        }
+        if(!player.getSkillPlaces()[skillIndex].getFree()){
+            player.getSkills()[skillIndex].startSkill(player, this, ball);
+            skillImages[skillPlaceIncex].destroy();
+            player.getSkillPlaces()[skillIndex].setFree(true);
+            player.removeSkill(player.getSkills()[skillIndex]);
+        }
+    }
+}
+
+Paddle.prototype.resetSkills = function (){
+    this.setIsInvisible(false);
+    this.setIsVulnerable(false);
+    this.setHaveShield(false);
+    if(this.getWall()!=null) this.getWall().getSprite().destroy();
+    this.setWall(null);
+    this.setPoisoned(false);
+    if(this.getMissile() != null) this.getMissile().getSprite().destroy();
+    this.setMissile(null);
 }

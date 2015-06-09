@@ -103,3 +103,81 @@ Skill.prototype.getImage = function(){
 Skill.prototype.setImage = function(value){
     this.image = value;
 }
+
+Skill.prototype.startSkill = function(player, paddle, ball){
+    switch(this.getTypeOf()){
+        case SKILL_WALL: //golpes
+            break;
+        case SKILL_VEL_GROW: //SEC
+            break;
+        case SKILL_POTION:
+            this.activePotion(player);
+            break;
+        case SKILL_PADDLE_GROW: //SEC
+            //not implemented
+            break;
+        case SKILL_HEAL_STATE:
+            this.healState(paddle);
+            break;
+        case SKILL_SHIELD:
+            this.setShield(paddle);
+            break;
+        case SKILL_POISON: //SEC
+            break;
+        case SKILL_MISSILE:
+            this.throwMissile(player, paddle);
+            break;
+        case SKILL_INVISIBLE: //SEC
+            break;
+        case SKILL_CHANGE_DIRECTION:
+            this.changeDirection(ball);
+            break;
+        case SKILL_PADDLE_DWARF: //SEC
+            //not implemented
+            break;
+        case SKILL_VEL_DWARF: //SEC
+            break;
+        case SKILL_VULNERABILITY: //golpe
+            break;
+        case SKILL_TURN_OFF_SKILL: //SEC
+            break;
+        default:
+            break;
+    }
+}
+
+Skill.prototype.activePotion = function (player){
+    system = new GameMechanics();
+    system.increaseLife(this.getLiveAmount(), player);
+}
+
+Skill.prototype.setShield = function (paddle){
+    paddle.setHaveShield(true);
+}
+
+Skill.prototype.throwMissile = function (player, paddle){
+    bee = new Missile();
+    if (player.getId()==1){
+        bee.setSpeed(GAMEMECHANICS_FIELD_WIDTH/70);
+        bee.setSpriteImage(MISSILE_TO_RIGHT);
+    } else {
+        bee.setSpeed(GAMEMECHANICS_FIELD_WIDTH/70*-1);
+        bee.setSpriteImage(MISSILE_TO_LEFT);
+    }
+    bee.createMissile(paddle.getSprite().x, paddle.getSprite().y);
+    paddle.setMissile(bee);
+}
+
+Skill.prototype.changeDirection = function (ball){
+    ball.setSignX(ball.getSignX()*-1);
+}
+
+Skill.prototype.healState = function (paddle){
+    paddle.setPoisoned(false);
+    if (paddle.getSpeed()<GAMEMECHANICS_PADDLE_SPEED){
+        paddle.setSpeed(GAMEMECHANICS_PADDLE_SPEED);
+    }
+    paddle.setIsInvisible(false);
+    paddle.setIsVulnerable(false);
+}
+

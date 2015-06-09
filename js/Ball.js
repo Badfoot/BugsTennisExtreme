@@ -87,19 +87,20 @@ Ball.prototype.create = function(){
 }
 
 Ball.prototype.move = function(player1, player2){
+    system = new GameMechanics();
     this.getSprite().x += this.getSpeedX()*this.getSignX();
     this.getSprite().y += this.getSpeedY()*this.getSignY();
     if(this.getSprite().x < 60){
         this.getSprite().x = 60;
         this.setSignX(1);
-        player1.setHp(player1.getHp()-GAMEMECHANICS_WALL_TOUCHED);
         
+        system.decreaseLife(GAMEMECHANICS_WALL_TOUCHED, player1);
     } else {
         if (this.getSprite().x > GAMEMECHANICS_WORLD_WIDTH-60){
             this.getSprite().x = GAMEMECHANICS_WORLD_WIDTH-60;
             this.setSignX(-1);
             
-            player2.setHp(player2.getHp()-GAMEMECHANICS_WALL_TOUCHED);
+            system.decreaseLife(GAMEMECHANICS_WALL_TOUCHED, player2);
         }
     }
     if(this.getSprite().y < 60){

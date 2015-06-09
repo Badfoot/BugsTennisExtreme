@@ -33,4 +33,3 @@ HPLife.prototype.setPositionY = function(value){
     this.positionY = value;
 }
 
-HPLife.prototype.

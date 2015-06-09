@@ -9,9 +9,8 @@ var Player = function (id) {
     this.skills[3] = null;
     this.id = id;
     this.skillPlaces;
-    this.score=0;
+    this.score = 0;
 };
-
 
 //typeof
 
@@ -21,7 +20,7 @@ Player.prototype.getHp = function(){
 
 Player.prototype.setHp = function(value){
     if(value < 0){
-        value= this.getHp();
+        value = this.getHp();
     }
     
     this.hp = value;
@@ -48,12 +47,12 @@ Player.prototype.setSkill = function(index, skill){
 }
 
 Player.prototype.removeSkill = function(skill){
-    this.skills.forEach(function (obj, index){
-        if(obj == skill){
-            obj = null;
+    for (var i = 0; i<skills.length; i++){
+        if(this.skills[i] == skill){
+            this.skills[i] = null;
             return true;
         }
-    });
+    }
     return false;
 }
 
@@ -80,5 +79,7 @@ Player.prototype.getScore = function(){
 Player.prototype.setScore = function(value){
     this.score = value;
 }
+
+
    
                         

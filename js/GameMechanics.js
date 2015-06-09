@@ -9,6 +9,7 @@ const GAMEMECHANICS_FIELD_WIDTH = 500;
 const GAMEMECHANICS_FIELD_HEIGHT = 300;
 const GAMEMECHANICS_RECOLLECTOR_WIDTH= 100;
 const GAMEMECHANICS_RECOLLECTOR_HEIGHT= 50;
+const GAMEMECHANICS_PADDLE_SPEED = GAMEMECHANICS_FIELD_HEIGHT/100;
 
 
 var GameMechanics = function () {
@@ -16,14 +17,15 @@ var GameMechanics = function () {
 };
 
 GameMechanics.prototype.increaseLife = function(howMany, player){
-    player.setHp(player.getHp()+howMany);
+    if (player.getHp()+howMany<=100){
+        player.setHp(player.getHp()+howMany);
+    }
 }
 
 GameMechanics.prototype.decreaseLife = function(howMany, player) {
-    if(howMany > player.getHp()){
-        howMany = player.getHp();
+    if(player.getHp()-howMany >= 0){
+        player.setHp(player.getHp()-howMany);
     }
-    player.setHp(player.getHp()-howMany);
 }
 
 GameMechanics.prototype.createWorld = function(){

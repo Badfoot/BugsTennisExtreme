@@ -1,11 +1,9 @@
 const WALL_MAX_LIVE = 2;
 
 var Wall = function () {
-
     this.live = 0;
     this.sprite;
 };
-
 
 //active
 Wall.prototype.getLive = function(){
