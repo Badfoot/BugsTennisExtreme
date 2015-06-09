@@ -134,6 +134,7 @@ var gameState = {
         this.skillcollectors[1].create(350, 10);
         this.skillcollectors[2].create(150, GAMEMECHANICS_WORLD_HEIGHT-GAMEMECHANICS_RECOLLECTOR_HEIGHT-10);
         this.skillcollectors[3].create(350, GAMEMECHANICS_WORLD_HEIGHT-GAMEMECHANICS_RECOLLECTOR_HEIGHT-10);
+    
     },
     
     createSkillPlaces: function () {
@@ -146,7 +147,7 @@ var gameState = {
             obj.createSkillPlace(1, index+1);
         });
         
-        this.player1.setSkillPlaces = this.skillPlacesOfP1;
+        this.player1.setSkillPlaces(this.skillPlacesOfP1);
         
         this.skillPlacesOfP2 = [];
         this.skillPlacesOfP2[0] = new SkillPlace(2, 1);
@@ -157,7 +158,7 @@ var gameState = {
             obj.createSkillPlace(2, index+1);
         });
         
-        this.player2.setSkillPlaces = this.skillPlacesOfP2;
+        this.player2.setSkillPlaces(this.skillPlacesOfP2);
     },
     
     createSkills: function () {
@@ -210,41 +211,53 @@ var gameState = {
     collisionOfPaddles: function () {
     //paddle 1
         if (this.ball.getSprite().x-5 >= this.paddle1.getSprite().x-5 && this.ball.getSprite().x-5 <= this.paddle1.getSprite().x+5){
-            this.ball.setOwnedBy(this.player1);
-            if(this.ball.getSprite().y >= this.paddle1.getSprite().y-30 && this.ball.getSprite().y <= this.paddle1.getSprite().y+30){
-                this.ball.setSignX(1);
-                if (this.ball.getSignY() == this.paddle1.getSignY()){
-                    this.ball.setSpeedY(this.ball.getSpeedY()+1);
-                } else if (this.ball.getSignY() != this.paddle1.getSignY() && this.paddle1.getSignY() != 0 && this.ball.getSpeedY()-1 > 0){
-                    this.ball.setSpeedY(this.ball.getSpeedY()-1); 
-                }
-            }
             //esquinas
             if(this.ball.getSprite().y >= this.paddle1.getSprite().y-30 && this.ball.getSprite().y <= this.paddle1.getSprite().y-20 && this.ball.getSignY() == 1){
+                this.ball.setOwnedBy(this.player1);
+                this.ball.setSignX(1);
                 this.ball.setSignY(-1);
             } else {
                 if(this.ball.getSprite().y <= this.paddle1.getSprite().y+30 && this.ball.getSprite().y >= this.paddle1.getSprite().y+20 && this.ball.getSignY() == -1){
+                    this.ball.setOwnedBy(this.player1);
+                    this.ball.setSignX(1);
                     this.ball.setSignY(1);
+                } else {
+                    //normal
+                    if(this.ball.getSprite().y >= this.paddle1.getSprite().y-30 && this.ball.getSprite().y <= this.paddle1.getSprite().y+30){
+                        this.ball.setOwnedBy(this.player1);
+                        this.ball.setSignX(1);
+                        if (this.ball.getSignY() == this.paddle1.getSignY()){
+                            this.ball.setSpeedY(this.ball.getSpeedY()+1);
+                        } else if (this.ball.getSignY() != this.paddle1.getSignY() && this.paddle1.getSignY() != 0 && this.ball.getSpeedY()-1 > 0){
+                            this.ball.setSpeedY(this.ball.getSpeedY()-1); 
+                        }
+                    }
                 }
             }
         } else {
     //paddle 2
             if (this.ball.getSprite().x+5 >= this.paddle2.getSprite().x-5 && this.ball.getSprite().x+5 <= this.paddle2.getSprite().x+5){
-                this.ball.setOwnedBy(this.player2);
-                if(this.ball.getSprite().y >= this.paddle2.getSprite().y-30 && this.ball.getSprite().y <= this.paddle2.getSprite().y+30){
-                    this.ball.setSignX(-1);
-                    if (this.ball.getSignY() == this.paddle2.getSignY()){
-                        this.ball.setSpeedY(this.ball.getSpeedY()+1);
-                    } else if (this.ball.getSignY() != this.paddle2.getSignY() && this.paddle2.getSignY() != 0 && this.ball.getSpeedY()-1 > 0){
-                        this.ball.setSpeedY(this.ball.getSpeedY()-1);
-                    }
-                }
                 //esquinas
                 if(this.ball.getSprite().y >= this.paddle2.getSprite().y-30 && this.ball.getSprite().y <= this.paddle2.getSprite().y-20 && this.ball.getSignY() == 1){
+                    this.ball.setOwnedBy(this.player2);
+                    this.ball.setSignX(-1);
                     this.ball.setSignY(-1);
                 } else {
                     if(this.ball.getSprite().y <= this.paddle2.getSprite().y+30 && this.ball.getSprite().y >= this.paddle2.getSprite().y+20 && this.ball.getSignY() == -1){
+                        this.ball.setOwnedBy(this.player2);
+                        this.ball.setSignX(-1);
                         this.ball.setSignY(1);
+                    } else {
+                        //normal
+                        if(this.ball.getSprite().y >= this.paddle2.getSprite().y-30 && this.ball.getSprite().y <= this.paddle2.getSprite().y+30){
+                            this.ball.setOwnedBy(this.player2);
+                            this.ball.setSignX(-1);
+                            if (this.ball.getSignY() == this.paddle2.getSignY()){
+                                this.ball.setSpeedY(this.ball.getSpeedY()+1);
+                            } else if (this.ball.getSignY() != this.paddle2.getSignY() && this.paddle2.getSignY() != 0 && this.ball.getSpeedY()-1 > 0){
+                                this.ball.setSpeedY(this.ball.getSpeedY()-1);
+                            }
+                        }
                     }
                 }
             }

@@ -1,14 +1,14 @@
 const SKILL_BOON = true;
 const SKILL_WEAPON = false;
-const SKILL_WALL= 0;
-const SKILL_VEL_GROW= 1;
+const SKILL_WALL = 0;
+const SKILL_VEL_GROW = 1;
 const SKILL_POTION = 2;
 const SKILL_PADDLE_GROW = 3;
 const SKILL_HEAL_STATE = 4;
 const SKILL_SHIELD = 5;
 const SKILL_POISON = 6;
-const SKILL_INVISIBLE = 7;
-const SKILL_MISSILE = 8;
+const SKILL_INVISIBLE = 8;
+const SKILL_MISSILE = 7;
 const SKILL_CHANGE_DIRECTION = 9;
 const SKILL_PADDLE_DWARF = 10;
 const SKILL_VEL_DWARF = 11;
@@ -96,10 +96,10 @@ Skill.prototype.setDuration = function(value){
 
 //sprite
 
-Skill.prototype.getSprite = function(){
-    return this.sprite;
+Skill.prototype.getImage = function(){
+    return this.image;
 }
 
-Skill.prototype.setSprite = function(value){
-    this.sprite = value;
+Skill.prototype.setImage = function(value){
+    this.image = value;
 }

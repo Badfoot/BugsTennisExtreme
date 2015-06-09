@@ -1,11 +1,11 @@
 var Ball = function () {
     this.speedX = GAMEMECHANICS_FIELD_WIDTH/100;
-    this.speedY = GAMEMECHANICS_FIELD_HEIGHT/60;
+    this.speedY = GAMEMECHANICS_FIELD_HEIGHT/70;
     this.imageSprite = "";
     this.sprite;
     this.signX = Phaser.Math.randomSign();
     this.signY = Phaser.Math.randomSign();
-    this.maxSpeedY = GAMEMECHANICS_FIELD_HEIGHT/35;
+    this.maxSpeedY = GAMEMECHANICS_FIELD_HEIGHT/50;
     this.ownedBy=null;
 };
 

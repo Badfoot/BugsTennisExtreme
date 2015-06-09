@@ -65,26 +65,37 @@ SkillCollector.prototype.giveSkill = function(player, skills, skillImages){
         var giveIt = false;
         var freePlace;
         var skill;
-        do {
-            skill = skills[random(skills.lenght)];
-            freePlace = this.getFirstFreePlaceOfTypeSkill(player, skill);
-            player.setSkill(freePlace, skill);
-            giveIt = true;
-        } while (!giveIt);
-        if(player.getId() == 2){
-            freePlace += 4;
+        if (this.haveFreeSkillPlace(player)){
+            do {
+                skill = skills[random(skills.length)];
+                freePlace = this.getFirstFreePlaceOfTypeSkill(player, skill);
+                if(freePlace>=0){
+                    player.setSkill(freePlace, skill);
+                    giveIt = true;
+                }
+            } while (!giveIt);
+
+            if(player.getId() == 2){
+                skillImages[freePlace+4] = game.add.image(
+                    player.getSkillPlaces()[freePlace].getX(),
+                    player.getSkillPlaces()[freePlace].getY(),
+                    skill.getImage()
+                );
+            } else {
+                skillImages[freePlace] = game.add.image(
+                    player.getSkillPlaces()[freePlace].getX(),
+                    player.getSkillPlaces()[freePlace].getY(),
+                    skill.getImage()
+                );
+            }
+
+            player.getSkillPlaces()[freePlace].setFree(false);
         }
-        
-        skillImages[freePlace] = game.add.image(
-            player.getSkillPlaces()[freePlace].getX(),
-            player.getSkillPlaces()[freePlace].getY(),
-            skill.getImage()
-        );
     }
 }
 
 SkillCollector.prototype.haveFreeSkillPlace = function(player){
-    for (var i; i<player.getSkillPlaces(); i++){
+    for (var i=0; i<player.getSkillPlaces().length; i++){
         if(player.getSkillPlaces()[i].getFree()){
             return true;
         }
@@ -93,13 +104,15 @@ SkillCollector.prototype.haveFreeSkillPlace = function(player){
 }
 
 SkillCollector.prototype.getFirstFreePlaceOfTypeSkill = function(player, skill){
-    var index = 0;
-    for (var i; i<player.getSkillPlaces(); i++){
+    var index = -1;
+    for (var i=0; i<player.getSkillPlaces().length; i++){
         if(player.getSkillPlaces()[i].getFree()){
-            if (i<2 && skill.getTypeOf()<2){
+            if (i<2 && skill.getBoon()){
                 index = i;
-            } else if(i>=2 && skill.getTypeOf()>=2) {
+                break;
+            } else if(i>=2 && !skill.getBoon()) {
                 index = i;
+                break;
             }
         }
     }
@@ -118,4 +131,7 @@ SkillCollector.prototype.removeSkillsFrom = function(player, skillImages){
             skillImages[i].destroy();
         }
     }
+    player.getSkillPlaces().forEach(function (obj){
+        obj.setFree(true);
+    });
 }
