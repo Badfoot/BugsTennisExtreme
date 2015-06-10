@@ -72,6 +72,7 @@ var gameState = {
             this.collisions();
             this.moveAll();
             this.skillListeners();
+            this.timeEvents();
             
             
             if(this.player1.getHp() <=0){
@@ -96,6 +97,39 @@ var gameState = {
 ///////////////////////////////////////////////////////////
 /** METODOS **********************************************/
 /*********************************************************/
+    timeEvents: function() {
+        if(this.paddle1.getSpeedGrowed()){
+            this.paddle1.updateSpeedGrowed(game.time.time, this.skills[1]);
+        }
+        if(this.paddle1.getSpeedDwarfed()){
+            this.paddle1.updateSpeedDwarfed(game.time.time, this.skills[11]);
+        }
+        if(this.paddle1.getPoisoned()){
+            this.paddle1.updatePoison(game.time.time, this.skills[6], this.player1);
+        }
+        if(this.paddle1.getIsInvisible()){
+            this.paddle1.updateInvisible(game.time.time, this.skills[8]);
+        }
+        
+        if(this.paddle2.getSpeedGrowed()){
+            this.paddle2.updateSpeedGrowed(game.time.time, this.skills[1]);
+        }
+        if(this.paddle2.getSpeedDwarfed()){
+            this.paddle2.updateSpeedDwarfed(game.time.time, this.skills[11]);
+        }
+        if(this.paddle2.getPoisoned()){
+            this.paddle2.updatePoison(game.time.time, this.skills[6], this.player2);
+        }
+        if(this.paddle2.getIsInvisible()){
+            this.paddle2.updateInvisible(game.time.time, this.skills[8]);
+        }
+        
+        if(!this.skillcollectors[0].getActive()){
+            this.skillcollectors.forEach(function (obj){
+                obj.updateState(game.time.time);
+            });
+        }
+    },
     
     /*********************************************************/   
     ///////////////////////////////////////////////////////////
@@ -319,39 +353,62 @@ var gameState = {
     },
     
     skillListeners: function () {
-        this.paddle1.skillListener(this.player1, this.cursor1, this.skillImages, this.ball);
-        this.paddle2.skillListener(this.player2, this.cursor2, this.skillImages, this.ball);
+        this.paddle1.skillListener(this.player1, this.cursor1, this.skillImages, this.ball, this.paddle2, this.skillcollectors);
+        this.paddle2.skillListener(this.player2, this.cursor2, this.skillImages, this.ball, this.paddle1, this.skillcollectors);
     },
     
     
     collisions: function () {
         this.collisionOfPaddles();
+        this.collisionOfWalls();
         this.collisionOfCollectors();
         this.collisionOfMissiles();
     },
     
     collisionOfPaddles: function () {
     //paddle 1
+        
         if (this.ball.getSprite().x-5 >= this.paddle1.getSprite().x-5 && this.ball.getSprite().x-5 <= this.paddle1.getSprite().x+5){
             //esquinas
             if(this.ball.getSprite().y >= this.paddle1.getSprite().y-30 && this.ball.getSprite().y <= this.paddle1.getSprite().y-20 && this.ball.getSignY() == 1){
-                this.ball.setOwnedBy(this.player1);
-                this.ball.setSignX(1);
-                this.ball.setSignY(-1);
-            } else {
-                if(this.ball.getSprite().y <= this.paddle1.getSprite().y+30 && this.ball.getSprite().y >= this.paddle1.getSprite().y+20 && this.ball.getSignY() == -1){
+                if(!this.paddle1.getIsVulnerable()){
                     this.ball.setOwnedBy(this.player1);
                     this.ball.setSignX(1);
-                    this.ball.setSignY(1);
+                    this.ball.setSignY(-1);
+                } else {
+                    this.paddle1.setIsVulnerable(false);
+                    if(!this.paddle1.getHaveShield()){
+                        this.gameController.decreaseLife(GAMEMECHANICS_WALL_TOUCHED, this.player1);
+                    }
+                }
+            } else {
+                if(this.ball.getSprite().y <= this.paddle1.getSprite().y+30 && this.ball.getSprite().y >= this.paddle1.getSprite().y+20 && this.ball.getSignY() == -1){
+                    if(!this.paddle1.getIsVulnerable()){
+                        this.ball.setOwnedBy(this.player1);
+                        this.ball.setSignX(1);
+                        this.ball.setSignY(1);
+                    } else {
+                        this.paddle1.setIsVulnerable(false);
+                        if(!this.paddle1.getHaveShield()){
+                            this.gameController.decreaseLife(GAMEMECHANICS_WALL_TOUCHED, this.player1);
+                        }
+                    }
                 } else {
                     //normal
                     if(this.ball.getSprite().y >= this.paddle1.getSprite().y-30 && this.ball.getSprite().y <= this.paddle1.getSprite().y+30){
-                        this.ball.setOwnedBy(this.player1);
-                        this.ball.setSignX(1);
-                        if (this.ball.getSignY() == this.paddle1.getSignY()){
-                            this.ball.setSpeedY(this.ball.getSpeedY()+1);
-                        } else if (this.ball.getSignY() != this.paddle1.getSignY() && this.paddle1.getSignY() != 0 && this.ball.getSpeedY()-1 > 0){
-                            this.ball.setSpeedY(this.ball.getSpeedY()-1); 
+                        if(!this.paddle1.getIsVulnerable()){
+                            this.ball.setOwnedBy(this.player1);
+                            this.ball.setSignX(1);
+                            if (this.ball.getSignY() == this.paddle1.getSignY()){
+                                this.ball.setSpeedY(this.ball.getSpeedY()+0.5);
+                            } else if (this.ball.getSignY() != this.paddle1.getSignY() && this.paddle1.getSignY() != 0 && this.ball.getSpeedY()-1 > 0){
+                                this.ball.setSpeedY(this.ball.getSpeedY()-0.5); 
+                            }
+                        } else {
+                            this.paddle1.setIsVulnerable(false);
+                            if(!this.paddle1.getHaveShield()){
+                                this.gameController.decreaseLife(GAMEMECHANICS_WALL_TOUCHED, this.player1);
+                            }
                         }
                     }
                 }
@@ -361,23 +418,44 @@ var gameState = {
             if (this.ball.getSprite().x+5 >= this.paddle2.getSprite().x-5 && this.ball.getSprite().x+5 <= this.paddle2.getSprite().x+5){
                 //esquinas
                 if(this.ball.getSprite().y >= this.paddle2.getSprite().y-30 && this.ball.getSprite().y <= this.paddle2.getSprite().y-20 && this.ball.getSignY() == 1){
-                    this.ball.setOwnedBy(this.player2);
-                    this.ball.setSignX(-1);
-                    this.ball.setSignY(-1);
-                } else {
-                    if(this.ball.getSprite().y <= this.paddle2.getSprite().y+30 && this.ball.getSprite().y >= this.paddle2.getSprite().y+20 && this.ball.getSignY() == -1){
+                    if(!this.paddle2.getIsVulnerable()){
                         this.ball.setOwnedBy(this.player2);
                         this.ball.setSignX(-1);
-                        this.ball.setSignY(1);
+                        this.ball.setSignY(-1);
+                    } else {
+                        this.paddle2.setIsVulnerable(false);
+                        if(!this.paddle2.getHaveShield()){
+                            this.gameController.decreaseLife(GAMEMECHANICS_WALL_TOUCHED, this.player2);
+                        }
+                    }
+                } else {
+                    if(this.ball.getSprite().y <= this.paddle2.getSprite().y+30 && this.ball.getSprite().y >= this.paddle2.getSprite().y+20 && this.ball.getSignY() == -1){
+                        if(!this.paddle2.getIsVulnerable()){
+                            this.ball.setOwnedBy(this.player2);
+                            this.ball.setSignX(-1);
+                            this.ball.setSignY(1);
+                        } else {
+                            this.paddle2.setIsVulnerable(false);
+                            if(!this.paddle2.getHaveShield()){
+                                this.gameController.decreaseLife(GAMEMECHANICS_WALL_TOUCHED, this.player2);
+                            }
+                        }
                     } else {
                         //normal
                         if(this.ball.getSprite().y >= this.paddle2.getSprite().y-30 && this.ball.getSprite().y <= this.paddle2.getSprite().y+30){
-                            this.ball.setOwnedBy(this.player2);
-                            this.ball.setSignX(-1);
-                            if (this.ball.getSignY() == this.paddle2.getSignY()){
-                                this.ball.setSpeedY(this.ball.getSpeedY()+1);
-                            } else if (this.ball.getSignY() != this.paddle2.getSignY() && this.paddle2.getSignY() != 0 && this.ball.getSpeedY()-1 > 0){
-                                this.ball.setSpeedY(this.ball.getSpeedY()-1);
+                            if(!this.paddle2.getIsVulnerable()){
+                                this.ball.setOwnedBy(this.player2);
+                                this.ball.setSignX(-1);
+                                if (this.ball.getSignY() == this.paddle2.getSignY()){
+                                    this.ball.setSpeedY(this.ball.getSpeedY()+0.5);
+                                } else if (this.ball.getSignY() != this.paddle2.getSignY() && this.paddle2.getSignY() != 0 && this.ball.getSpeedY()-1 > 0){
+                                    this.ball.setSpeedY(this.ball.getSpeedY()-0.5);
+                                }
+                            } else {
+                                this.paddle2.setIsVulnerable(false);
+                                if(!this.paddle2.getHaveShield()){
+                                    this.gameController.decreaseLife(GAMEMECHANICS_WALL_TOUCHED, this.player2);
+                                }
                             }
                         }
                     }
@@ -420,6 +498,18 @@ var gameState = {
             missile = this.paddle2.getMissile();
             missile.move();
             missile.impact(this.paddle1, this.player1, this.paddle2);
+        }
+    },
+    
+    collisionOfWalls: function () {
+        wall = null;
+        if(this.paddle1.getWall() != null){
+            wall = this.paddle1.getWall();
+            wall.collision(this.ball, this.paddle1, this.player1);
+        }
+        if(this.paddle2.getWall() != null){
+            wall = this.paddle2.getWall();
+            wall.collision(this.ball, this.paddle2, this.player2);
         }
     }
 }

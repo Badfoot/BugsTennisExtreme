@@ -104,11 +104,13 @@ Skill.prototype.setImage = function(value){
     this.image = value;
 }
 
-Skill.prototype.startSkill = function(player, paddle, ball){
+Skill.prototype.startSkill = function(player, paddle, ball, targetPaddle, skillcollectors){
     switch(this.getTypeOf()){
-        case SKILL_WALL: //golpes
+        case SKILL_WALL:
+            this.setWall(player, paddle);
             break;
-        case SKILL_VEL_GROW: //SEC
+        case SKILL_VEL_GROW:
+            this.setVelGrow(paddle);
             break;
         case SKILL_POTION:
             this.activePotion(player);
@@ -123,11 +125,13 @@ Skill.prototype.startSkill = function(player, paddle, ball){
             this.setShield(paddle);
             break;
         case SKILL_POISON: //SEC
+            this.poison(targetPaddle);
             break;
         case SKILL_MISSILE:
             this.throwMissile(player, paddle);
             break;
-        case SKILL_INVISIBLE: //SEC
+        case SKILL_INVISIBLE:
+            this.turnInvisible(targetPaddle);
             break;
         case SKILL_CHANGE_DIRECTION:
             this.changeDirection(ball);
@@ -135,15 +139,49 @@ Skill.prototype.startSkill = function(player, paddle, ball){
         case SKILL_PADDLE_DWARF: //SEC
             //not implemented
             break;
-        case SKILL_VEL_DWARF: //SEC
+        case SKILL_VEL_DWARF:
+            this.setVelDwarf(targetPaddle);
             break;
-        case SKILL_VULNERABILITY: //golpe
+        case SKILL_VULNERABILITY:
+            this.setVulnerability(targetPaddle);
             break;
         case SKILL_TURN_OFF_SKILL: //SEC
+            this.turnOffCollectors(skillcollectors);
             break;
         default:
             break;
     }
+}
+
+Skill.prototype.setWall = function (player, paddle){
+    if (paddle.getWall() != null){
+        paddle.getWall().getSprite().destroy();
+    }
+    var wall = new Wall();
+    var x = 0;
+    if (player.getId()==1){
+        x = paddle.getSprite().x-10;
+    } else {
+        x = paddle.getSprite().x+10;
+    }
+    wall.create(x);
+    paddle.setWall(wall);
+}
+
+Skill.prototype.setVelGrow = function (paddle){
+    if(paddle.getSpeed() <= GAMEMECHANICS_PADDLE_SPEED){
+        paddle.setSpeed(paddle.getSpeed()+(GAMEMECHANICS_PADDLE_SPEED/2));
+    }
+    paddle.setSpeedGrowStartTime(game.time.time);
+    paddle.setSpeedGrowed(true);
+}
+
+Skill.prototype.setVelDwarf = function (targetPaddle){
+    if(targetPaddle.getSpeed() > GAMEMECHANICS_PADDLE_SPEED-GAMEMECHANICS_PADDLE_SPEED/2){
+        targetPaddle.setSpeed(targetPaddle.getSpeed()-(GAMEMECHANICS_PADDLE_SPEED/2));
+    }
+    targetPaddle.setSpeedDwarfStartTime(game.time.time);
+    targetPaddle.setSpeedDwarfed(true);
 }
 
 Skill.prototype.activePotion = function (player){
@@ -155,7 +193,16 @@ Skill.prototype.setShield = function (paddle){
     paddle.setHaveShield(true);
 }
 
+Skill.prototype.poison = function (targetPaddle){
+    targetPaddle.setPoisoned(true);
+    targetPaddle.setPoisonStartTime(game.time.time);
+    targetPaddle.setHowOftenPoison(2000);
+}
+
 Skill.prototype.throwMissile = function (player, paddle){
+    if (paddle.getMissile() != null){
+        paddle.getMissile().getSprite().destroy();
+    }
     bee = new Missile();
     if (player.getId()==1){
         bee.setSpeed(GAMEMECHANICS_FIELD_WIDTH/70);
@@ -168,6 +215,12 @@ Skill.prototype.throwMissile = function (player, paddle){
     paddle.setMissile(bee);
 }
 
+Skill.prototype.turnInvisible = function (targetPaddle){
+    targetPaddle.setIsInvisible(true);
+    targetPaddle.setIsInvisibleStartTime(game.time.time);
+    targetPaddle.getSprite().alpha = 0;
+}
+
 Skill.prototype.changeDirection = function (ball){
     ball.setSignX(ball.getSignX()*-1);
 }
@@ -178,6 +231,17 @@ Skill.prototype.healState = function (paddle){
         paddle.setSpeed(GAMEMECHANICS_PADDLE_SPEED);
     }
     paddle.setIsInvisible(false);
+    paddle.getSprite().alpha = 1;
     paddle.setIsVulnerable(false);
 }
 
+Skill.prototype.setVulnerability = function (targetPaddle){
+    targetPaddle.setIsVulnerable(true);
+}
+
+Skill.prototype.turnOffCollectors = function (skillcollectors){
+    skillcollectors.forEach(function (obj){
+        obj.setActive(false);
+        obj.setBadCollectorStartTime(game.time.time);
+    });
+}

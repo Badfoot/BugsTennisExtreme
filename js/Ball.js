@@ -5,7 +5,7 @@ var Ball = function () {
     this.sprite;
     this.signX = Phaser.Math.randomSign();
     this.signY = Phaser.Math.randomSign();
-    this.maxSpeedY = GAMEMECHANICS_FIELD_HEIGHT/50;
+    this.maxSpeedY = GAMEMECHANICS_FIELD_HEIGHT/60;
     this.ownedBy=null;
 };
 

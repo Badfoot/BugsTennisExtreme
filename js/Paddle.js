@@ -1,16 +1,61 @@
 var Paddle = function () {
 
     this.speed = GAMEMECHANICS_PADDLE_SPEED;
+    this.speedGrowed = false;
+    this.speedDwarfed = false;
     this.haveShield = false;
     this.isVulnerable = false;
     this.poisoned = false;
+    this.poisonStartTime = 0;
     this.isInvisible = false;
+    this.isInvisibleStartTime = 0;
+    this.howOftenPoison = 2000;
+    this.speedGrowStartTime = 0;
+    this.speedDwarfStartTime = 0;
     this.spriteImage = "";
     this.sprite;
     this.wall = null;
     this.missile  = null;
     this.signY = 0;
 };
+
+Paddle.prototype.getSpeedGrowed = function(){
+    return this.speedGrowed;
+}
+Paddle.prototype.setSpeedGrowed = function(value){
+    this.speedGrowed = value;
+}
+Paddle.prototype.getSpeedDwarfed = function(){
+    return this.speedDwarfed;
+}
+Paddle.prototype.setSpeedDwarfed = function(value){
+    this.speedDwarfed = value;
+}
+
+Paddle.prototype.getPoisonStartTime = function(){
+    return this.poisonStartTime;
+}
+Paddle.prototype.setPoisonStartTime = function(value){
+    this.poisonStartTime = value;
+}
+Paddle.prototype.getIsInvisibleStartTime = function(){
+    return this.isInvisibleStartTime;
+}
+Paddle.prototype.setIsInvisibleStartTime = function(value){
+    this.isInvisibleStartTime = value;
+}
+Paddle.prototype.getSpeedGrowStartTime = function(){
+    return this.speedGrowStartTime;
+}
+Paddle.prototype.setSpeedGrowStartTime = function(value){
+    this.speedGrowStartTime = value;
+}
+Paddle.prototype.getSpeedDwarfStartTime = function(){
+    return this.speedDwarfStartTime;
+}
+Paddle.prototype.setSpeedDwarfStartTime = function(value){
+    this.speedDwarfStartTime = value;
+}
 
 //speed
 
@@ -60,6 +105,14 @@ Paddle.prototype.getPoisoned = function(){
 
 Paddle.prototype.setPoisoned = function(value){
     this.poisoned = value;
+}
+
+Paddle.prototype.setHowOftenPoison = function (value){
+    this.howOftenPoison = value;
+}
+
+Paddle.prototype.getHowOftenPoison = function (){
+    return this.howOftenPoison;
 }
 
 //isInvisible
@@ -139,7 +192,7 @@ Paddle.prototype.move = function(cursor){
     }
 }
 
-Paddle.prototype.skillListener = function (player, cursor, skillImages, ball){
+Paddle.prototype.skillListener = function (player, cursor, skillImages, ball, targetPaddle, skillCollector){
     var skillIndex = -1;
     var skillPlaceIncex = -1;
     if(cursor.boon1.isDown){
@@ -157,11 +210,56 @@ Paddle.prototype.skillListener = function (player, cursor, skillImages, ball){
             skillPlaceIncex += 4;
         }
         if(!player.getSkillPlaces()[skillIndex].getFree()){
-            player.getSkills()[skillIndex].startSkill(player, this, ball);
+            if (player.getSkills()[skillIndex]!=null){
+                player.getSkills()[skillIndex].startSkill(player, this, ball, targetPaddle, skillCollector);
+                player.removeSkill(player.getSkills()[skillIndex]);
+            }
             skillImages[skillPlaceIncex].destroy();
             player.getSkillPlaces()[skillIndex].setFree(true);
-            player.removeSkill(player.getSkills()[skillIndex]);
         }
+    }
+}
+
+Paddle.prototype.updateSpeedGrowed = function (now, skill){
+    var difference = (now-this.getSpeedGrowStartTime());
+    var endTime = skill.getDuration()*1000;
+    if(difference >= endTime){
+        this.setSpeedGrowed(false);
+        this.setSpeed(GAMEMECHANICS_PADDLE_SPEED);
+    }
+}
+
+Paddle.prototype.updateSpeedDwarfed = function (now, skill){
+    var difference = (now-this.getSpeedDwarfStartTime());
+    var endTime = skill.getDuration()*1000;
+    if(difference >= endTime){
+        this.setSpeedDwarfed(false);
+        this.setSpeed(GAMEMECHANICS_PADDLE_SPEED);
+    }
+}
+
+Paddle.prototype.updatePoison = function (now, skill, player){
+    var difference = (now-this.getPoisonStartTime());
+    var endTime = skill.getDuration()*1000;
+    if(difference < endTime){
+        if(difference >= this.getHowOftenPoison()){
+            system = new GameMechanics();
+            system.decreaseLife(skill.getLiveAmount(), player);
+            this.setHowOftenPoison(this.getHowOftenPoison()+2000);
+        }
+    } else {
+        system = new GameMechanics();
+        system.decreaseLife(skill.getLiveAmount(), player);
+        this.setHowOftenPoison(this.getHowOftenPoison()+2000);
+        this.setPoisoned(false);
+    }
+}
+
+Paddle.prototype.updateInvisible = function (now, skill){
+    var difference = (now-this.getIsInvisibleStartTime());
+    var endTime = skill.getDuration()*1000;
+    if(difference >= endTime){
+        this.getSprite().alpha = 1;
     }
 }
 

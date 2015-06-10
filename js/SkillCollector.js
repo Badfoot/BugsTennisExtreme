@@ -3,6 +3,7 @@ var SkillCollector = function () {
     this.active = true;
     this.spriteImage = "";
     this.sprite;
+    this.badCollectorStartTime = 0;
 };
 
 //active
@@ -134,4 +135,20 @@ SkillCollector.prototype.removeSkillsFrom = function(player, skillImages){
     player.getSkillPlaces().forEach(function (obj){
         obj.setFree(true);
     });
+}
+
+SkillCollector.prototype.getBadCollectorStartTime = function(){
+    return this.badCollectorStartTime;
+}
+
+SkillCollector.prototype.setBadCollectorStartTime = function(value){
+    this.badCollectorStartTime = value;
+}
+
+SkillCollector.prototype.updateState = function(now){
+    var difference = now-this.getBadCollectorStartTime();
+    var endTime = GAMEMECHANICS_COLLECTORS_TIME_OUT;
+    if (difference >= endTime){
+        this.setActive(true);
+    }
 }
