@@ -1,5 +1,8 @@
-var Paddle = function () {
+const PADDLE_NORMAL_SIZE = 60;
+const PADDLE_MIN_SIZE = PADDLE_NORMAL_SIZE/2;
+const PADDLE_MAX_SIZE = PADDLE_NORMAL_SIZE+PADDLE_MIN_SIZE;
 
+var Paddle = function () {
     this.speed = GAMEMECHANICS_PADDLE_SPEED;
     this.speedGrowed = false;
     this.speedDwarfed = false;
@@ -17,7 +20,45 @@ var Paddle = function () {
     this.wall = null;
     this.missile  = null;
     this.signY = 0;
+    this.size = PADDLE_NORMAL_SIZE;
+    this.sizeGrowStartTime = 0;
+    this.sizeDwarfStartTime = 0;
+    this.sizeGrowed = false;
+    this.sizeDwarfed = false;
 };
+
+Paddle.prototype.getSize = function(){
+    return this.size;
+}
+Paddle.prototype.setSize = function(value){
+    this.size = value;
+}
+Paddle.prototype.getSizeGrowed = function(){
+    return this.sizeGrowed;
+}
+Paddle.prototype.getSizeGrowed = function(value){
+    this.sizeGrowed = value;
+}
+Paddle.prototype.getSizeDwarfed = function(){
+    return this.sizeDwarfed;
+}
+Paddle.prototype.setSizeDwarfed = function(value){
+    this.sizeDwarfed = value;
+}
+Paddle.prototype.getSizeGrowStartTime = function(){
+    return this.sizeGrowStartTime;
+}
+Paddle.prototype.setSizeGrowStartTime = function(value){
+    this.sizeGrowStartTime = value;
+}
+Paddle.prototype.getSizeDwarfStartTime = function(){
+    return this.sizeDwarfStartTime;
+}
+Paddle.prototype.setSizeDwarfStartTime = function(value){
+    this.sizeDwarfStartTime = value;
+}
+
+
 
 Paddle.prototype.getSpeedGrowed = function(){
     return this.speedGrowed;
@@ -235,6 +276,36 @@ Paddle.prototype.updateSpeedDwarfed = function (now, skill){
     if(difference >= endTime){
         this.setSpeedDwarfed(false);
         this.setSpeed(GAMEMECHANICS_PADDLE_SPEED);
+    }
+}
+
+Paddle.prototype.updateSizeGrowed = function (now, skill){
+    var difference = (now-this.getSizeGrowStartTime());
+    var endTime = skill.getDuration()*1000;
+    if(difference >= endTime){
+        if (this.getSize()==PADDLE_MAX_SIZE){
+            this.setSize(PADDLE_NORMAL_SIZE);
+            this.getSprite().scale.setTo(1, 1);
+        } else if (this.getSize()==PADDLE_NORMAL_SIZE && this.getSizeDwarfed()){
+            this.setSize(PADDLE_MIN_SIZE);
+            this.getSprite().scale.setTo(1, 0.5);
+        }
+        this.getSizeGrowed(false);
+    }
+}
+
+Paddle.prototype.updateSizeDwarfed = function (now, skill){
+    var difference = (now-this.getSizeDwarfStartTime());
+    var endTime = skill.getDuration()*1000;
+    if(difference >= endTime){
+        if (this.getSize()==PADDLE_MIN_SIZE){
+            this.setSize(PADDLE_NORMAL_SIZE);
+            this.getSprite().scale.setTo(1, 1);
+        } else if (this.getSize()==PADDLE_NORMAL_SIZE && this.getSizeGrowed()){
+            this.setSize(PADDLE_MAX_SIZE);
+            this.getSprite().scale.setTo(1, 1.5);
+        }
+        this.getSizeDwarfed(false);
     }
 }
 

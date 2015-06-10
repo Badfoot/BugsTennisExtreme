@@ -13,7 +13,7 @@ const FUREMOL_INSTRUCTIONS_3 = "state-instructions-3";
 /********************************************/
 function playOST(ost){
     var audio = game.add.audio(ost);
-    audio.volume = 0.5;
+    audio.volume = 0.75;
     audio.loop = true;
     audio.play();
 }
@@ -32,11 +32,10 @@ function toggleSound(button){
 
 
 function stopAllSounds(){
-    //if(game.sound.mute) game.sound.stopAll();
+    game.sound.stopAll();
 }
 
 function goToLvl(state){
-    stopAllSounds();
     game.state.start(state);
 }
 

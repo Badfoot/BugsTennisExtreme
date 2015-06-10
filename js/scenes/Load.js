@@ -77,10 +77,15 @@ var loadState = {
         game.load.image('imgMaps_rightSup', '../assets/images/imagemaps/right_sup.jpg'); 
         game.load.image('imgMaps_supLeft', '../assets/images/imagemaps/sup_left.jpg');
         game.load.image('imgMaps_supMid', '../assets/images/imagemaps/sup_mid.jpg');
-        game.load.image('imgMaps_supRight', '../assets/images/imagemaps/sup_right.jpg');        
+        game.load.image('imgMaps_supRight', '../assets/images/imagemaps/sup_right.jpg');      
+        
+        //AUDIO
+        game.load.audio("ostMenu", "../../assets/ost/1 - MainTitle.ogg");
+        game.load.audio("ost", "../../assets/ost/4 - Fight!.ogg");
 	},
 
 	create: function() { 
+        playOST("ostMenu");
 		goToLvl(FUREMOL_MENU);
 	}
 };

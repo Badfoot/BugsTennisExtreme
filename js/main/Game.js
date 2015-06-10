@@ -1,13 +1,11 @@
 //state == scene //
 var gameState = {
 /**/preload: function () {
-        //game.load.audio("ost1", "assets/ost/4 - Fight!.ogg");
+        //VOID
     },
     
 /**/create: function () {
-        //DEBUG
-        reduce = 0;
-    
+        playOST("ost");
         //GAME
         game.physics.startSystem(Phaser.Physics.ARCADE);
         this.gameController = new GameMechanics();
@@ -34,7 +32,7 @@ var gameState = {
         
     
         //Buttons
-        var goBack = game.add.button(GAMEMECHANICS_WORLD_WIDTH/2-(106/2), GAMEMECHANICS_WORLD_HEIGHT-45, "btn_menu", function (goBack){goToLvl(FUREMOL_MENU);}, this);
+        var goBack = game.add.button(GAMEMECHANICS_WORLD_WIDTH/2-(106/2), GAMEMECHANICS_WORLD_HEIGHT-45, "btn_menu", function (goBack){stopAllSounds(); playOST("ostMenu"); goToLvl(FUREMOL_MENU);}, this);
         goBack.input.useHandCursor = true;
     
         //PLAYER 1
@@ -68,29 +66,26 @@ var gameState = {
     },
 
 /**/update: function () {
-        if(reduce%10 == 0){
-            this.collisions();
-            this.moveAll();
-            this.skillListeners();
-            this.timeEvents();
-            
-            
-            if(this.player1.getHp() <=0){
-                this.player2.setScore(this.player2.getScore()+1);
-                this.reset();
-            }
-            if(this.player2.getHp() <=0){
-                this.player1.setScore(this.player1.getScore()+1);
-                this.reset();
-            }
-            
-            this.scorePlayer1Life.text = this.player1.getHp() + "%";
-            this.scorePlayer2Life.text = this.player2.getHp() + "%";
-            
-            this.scorePlayer1.text = this.player1.getScore();
-            this.scorePlayer2.text = this.player2.getScore();
+        this.collisions();
+        this.moveAll();
+        this.skillListeners();
+        this.timeEvents();
+
+
+        if(this.player1.getHp() <=0){
+            this.player2.setScore(this.player2.getScore()+1);
+            this.reset();
         }
-        //reduce++;
+        if(this.player2.getHp() <=0){
+            this.player1.setScore(this.player1.getScore()+1);
+            this.reset();
+        }
+
+        this.scorePlayer1Life.text = this.player1.getHp() + "%";
+        this.scorePlayer2Life.text = this.player2.getHp() + "%";
+
+        this.scorePlayer1.text = this.player1.getScore();
+        this.scorePlayer2.text = this.player2.getScore();
     },
     
 /*********************************************************/   
@@ -110,6 +105,12 @@ var gameState = {
         if(this.paddle1.getIsInvisible()){
             this.paddle1.updateInvisible(game.time.time, this.skills[8]);
         }
+        if(this.paddle1.getSizeGrowed()){
+            this.paddle1.updateSizeGrowed(game.time.time, this.skills[3]);
+        }
+        if(this.paddle1.getSizeDwarfed()){
+            this.paddle1.updateSizeDwarfed(game.time.time, this.skills[10]);
+        }
         
         if(this.paddle2.getSpeedGrowed()){
             this.paddle2.updateSpeedGrowed(game.time.time, this.skills[1]);
@@ -123,6 +124,12 @@ var gameState = {
         if(this.paddle2.getIsInvisible()){
             this.paddle2.updateInvisible(game.time.time, this.skills[8]);
         }
+        /*if(this.paddle2.getSizeGrowed()){
+            this.paddle2.updateSizeGrowed(game.time.time, this.skills[3]);
+        }
+        if(this.paddle2.getSizeDwarfed()){
+            this.paddle2.updateSizeDwarfed(game.time.time, this.skills[10]);
+        }*/
         
         if(!this.skillcollectors[0].getActive()){
             this.skillcollectors.forEach(function (obj){
@@ -251,7 +258,7 @@ var gameState = {
             this.score = this.player1.getScore(),
             {
                 font: "24px Arial",
-                fill: "#ffffff"
+                fill: "#000000"
             }
         );
         this.scoreLabelUnion = game.add.text(
@@ -260,7 +267,7 @@ var gameState = {
             this.score = ":",
             {
                 font: "24px Arial",
-                fill: "#ffffff"
+                fill: "#000000"
             }
         );
         this.scorePlayer2 = game.add.text(
@@ -269,7 +276,7 @@ var gameState = {
             this.score = this.player2.getScore(),
             {
                 font: "24px Arial",
-                fill: "#ffffff"
+                fill: "#000000"
             }
         );
     },
@@ -283,7 +290,7 @@ var gameState = {
             this.score = "Player 1",
             {
                 font: "18px Arial",
-                fill: "#ffffff"
+                fill: "#000000"
             }
         );
         this.scorePlayer1Life = game.add.text(
@@ -292,7 +299,7 @@ var gameState = {
             this.score = this.player1.getHp()+"%",
             {
                 font: "18px Arial",
-                fill: "#ffffff"
+                fill: "#000000"
             }
         );
         this.scorePlayer2Label = game.add.text(
@@ -301,7 +308,7 @@ var gameState = {
             this.score = "Player 2",
             {
                 font: "18px Arial",
-                fill: "#ffffff"
+                fill: "#000000"
             }
         );
         this.scorePlayer2Life = game.add.text(
@@ -310,7 +317,7 @@ var gameState = {
             this.score = this.player2.getHp()+"%",
             {
                 font: "18px Arial",
-                fill: "#ffffff"
+                fill: "#000000"
             }
         );
         

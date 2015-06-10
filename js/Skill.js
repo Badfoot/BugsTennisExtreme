@@ -116,7 +116,7 @@ Skill.prototype.startSkill = function(player, paddle, ball, targetPaddle, skillc
             this.activePotion(player);
             break;
         case SKILL_PADDLE_GROW: //SEC
-            //not implemented
+            this.growPaddle(paddle);
             break;
         case SKILL_HEAL_STATE:
             this.healState(paddle);
@@ -137,7 +137,7 @@ Skill.prototype.startSkill = function(player, paddle, ball, targetPaddle, skillc
             this.changeDirection(ball);
             break;
         case SKILL_PADDLE_DWARF: //SEC
-            //not implemented
+            this.dwarfPaddle(targetPaddle);
             break;
         case SKILL_VEL_DWARF:
             this.setVelDwarf(targetPaddle);
@@ -187,6 +187,28 @@ Skill.prototype.setVelDwarf = function (targetPaddle){
 Skill.prototype.activePotion = function (player){
     system = new GameMechanics();
     system.increaseLife(this.getLiveAmount(), player);
+}
+
+Skill.prototype.growPaddle = function (paddle){
+    /*if(paddle.getSize() <= PADDLE_MAX_SIZE){
+        paddle.setSize(PADDLE_MAX_SIZE);
+        paddle.getSprite().scale.setTo(1, 1.5);
+    } else {
+        paddle.setSize(PADDLE_NORMAL_SIZE);
+        paddle.getSprite().scale.setTo(1, 1.5);
+    }
+    paddle.setSizeGrowStartTime(game.time.time);*/
+}
+
+Skill.prototype.dwarfPaddle = function (targetPaddle){
+    /*if(targetPaddle.getSize() >= PADDLE_NORMAL_SIZE){
+        targetPaddle.setSize(PADDLE_MIN_SIZE);
+        targetPaddle.getSprite().scale.setTo(1, 1.5);
+    } else {
+        targetPaddle.setSize(PADDLE_NORMAL_SIZE);
+        targetPaddle.getSprite().scale.setTo(1, 1.5);
+    }
+    targetPaddle.setSizeGrowStartTime(game.time.time);*/
 }
 
 Skill.prototype.setShield = function (paddle){
